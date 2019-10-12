@@ -27,12 +27,12 @@ var raytracerkotlin = function (_, Kotlin) {
   function main() {
     var tmp$, tmp$_0;
     println('Started webworker');
+    var xmax = 5;
+    var ymax = 5;
+    var endColor = Vector_init();
+    var endImage = ArrayList_init();
+    var index = 0;
     while (true) {
-      var xmax = 5;
-      var ymax = 5;
-      var endColor = Vector_init();
-      var endImage = ArrayList_init();
-      var index = 0;
       tmp$ = height;
       for (var screenY = 0; screenY <= tmp$; screenY++) {
         tmp$_0 = width;

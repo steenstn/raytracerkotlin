@@ -32,12 +32,13 @@ val spheres = listOf(
      //  canvas.width = width
      //  canvas.height = height
 
-     while(true){
+
      val xmax = 5
      val ymax = 5
      var endColor = Vector()
      var endImage = arrayListOf<Double>()
      var index = 0
+     while(true){
      for (screenY in 0..height) {
 
          for (screenX in 0..width) {

@@ -39,7 +39,7 @@ val spheres = listOf(
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
  fun main() {
-
+    println("Started webworker")
 
   //  canvas.width = width
   //  canvas.height = height
@@ -61,7 +61,7 @@ val spheres = listOf(
 
             val s = Vector(0.0,0.0,7.0)
 
-            val numRays = 20
+            val numRays = 10
             for (i in 0..numRays) {
                 endColor += shootRay(s, dir)
             }

@@ -1,4 +1,4 @@
-importScripts("https://steenstn.github.io/coroutines/out/production/coroutines/lib/kotlin.js")
+importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
 if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
@@ -25,6 +25,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var spheres;
   function main() {
     var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+    println('Started webworker');
     var xmax = 5;
     var ymax = 5;
     var endColor = Vector_init();
@@ -41,7 +42,7 @@ var raytracerkotlin = function (_, Kotlin) {
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
         var s = new Vector(0.0, 0.0, 7.0);
-        var numRays = 20;
+        var numRays = 10;
         for (var i = 0; i <= numRays; i++) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }

@@ -19,6 +19,7 @@ var render = function (_, Kotlin) {
     println('message: ' + toString(event.data));
     println(typeof event.data);
     var imageList = JSON.parse(typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE());
+    println(imageList);
     var index = 0;
     tmp$_1 = height;
     for (var y = 0; y <= tmp$_1; y++) {

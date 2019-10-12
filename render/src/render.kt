@@ -30,7 +30,7 @@ fun main() {
             println(jsTypeOf(event.data))
 
             val imageList = JSON.parse<ArrayList<Double>>(event.data as String)
-
+            println(imageList)
 
             var index = 0
             for(y in 0..height) {

@@ -15,10 +15,7 @@ var render = function (_, Kotlin) {
   var context;
   function main$lambda$lambda(closure$e) {
     return function () {
-      var tmp$, tmp$_0;
-      var data = Kotlin.isArray(tmp$ = closure$e.data) ? tmp$ : throwCCE();
-      var image = Kotlin.isArray(tmp$_0 = data[0]) ? tmp$_0 : throwCCE();
-      println('image ' + toString(image));
+      println('image ' + toString(closure$e.data));
       return Unit;
     };
   }

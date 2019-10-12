@@ -17,9 +17,8 @@ fun main() {
 
     val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
     worker.onmessage = {e -> {
-        val data = e.data as Array<*>
-        val image = data[0] as Array<*>
-        println("image " + image)
+
+        println("image " + e.data)
 
         /*for(i in 0..width*height*3) {
 

@@ -6,6 +6,7 @@ var render = function (_, Kotlin) {
   var throwCCE = Kotlin.throwCCE;
   var toString = Kotlin.toString;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var List = Kotlin.kotlin.collections.List;
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -17,7 +18,7 @@ var render = function (_, Kotlin) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
     println('message: ' + toString(event.data));
-    var imageList = JSON.parse(typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE());
+    var imageList = Kotlin.isType(tmp$_0 = event.data, List) ? tmp$_0 : throwCCE();
     println(typeof imageList);
     var index = 0;
     tmp$_1 = height;

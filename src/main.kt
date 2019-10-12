@@ -1,22 +1,4 @@
-import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.DedicatedWorkerGlobalScope
-import org.w3c.dom.HTMLCanvasElement
-import org.w3c.dom.Worker
-import kotlin.browser.document
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.coroutines.startCoroutine
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-import kotlin.js.Math.random
-import kotlin.js.Promise
-import kotlin.math.cos
-import kotlin.math.round
-import kotlin.math.sin
-import kotlin.math.sqrt
-import kotlin.random.Random
 
 val width = 1000
 val height = 600
@@ -76,6 +58,7 @@ external val self: DedicatedWorkerGlobalScope
         }
     }*/
     self.postMessage("endImage")
+     println("posted message")
    // self.close()
 }
 /*

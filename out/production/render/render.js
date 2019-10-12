@@ -4,17 +4,15 @@ if (typeof kotlin === 'undefined') {
 var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toString = Kotlin.toString;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
-  var ensureNotNull = Kotlin.ensureNotNull;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var width;
   var height;
   var canvas;
   var context;
-  var worker;
   function main$lambda$lambda(closure$e) {
     return function () {
       println('image ' + toString(closure$e.data));
@@ -27,9 +25,9 @@ var render = function (_, Kotlin) {
   function main() {
     canvas.width = width;
     canvas.height = height;
-    worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-    println('in render');
-    ensureNotNull(worker).onmessage = main$lambda;
+    var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
+    worker.onmessage = main$lambda;
+    println(worker);
     waitMethod();
   }
   function waitMethod$lambda() {
@@ -37,7 +35,8 @@ var render = function (_, Kotlin) {
     return Unit;
   }
   function waitMethod() {
-    window.setTimeout(waitMethod$lambda, 50);
+    println('waiting');
+    window.setTimeout(waitMethod$lambda, 1000);
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));
@@ -65,14 +64,6 @@ var render = function (_, Kotlin) {
       return context;
     }
   });
-  Object.defineProperty(_, 'worker', {
-    get: function () {
-      return worker;
-    },
-    set: function (value) {
-      worker = value;
-    }
-  });
   _.main = main;
   _.waitMethod = waitMethod;
   _.fillStyle_yvo9jy$ = fillStyle;
@@ -82,7 +73,6 @@ var render = function (_, Kotlin) {
   var tmp$, tmp$_0;
   canvas = Kotlin.isType(tmp$ = document.getElementById('c'), HTMLCanvasElement) ? tmp$ : throwCCE();
   context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();
-  worker = null;
   main();
   Kotlin.defineModule('render', _);
   return _;

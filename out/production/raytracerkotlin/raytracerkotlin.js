@@ -22,6 +22,7 @@ var raytracerkotlin = function (_, Kotlin) {
   function main() {
     println('Started webworker');
     self.postMessage('endImage');
+    println('posted message');
   }
   function Material(color, emittance, type) {
     this.color = color;

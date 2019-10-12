@@ -13,15 +13,15 @@ importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytrac
 
 val canvas = document.getElementById("c") as HTMLCanvasElement
 val context = canvas.getContext("2d") as CanvasRenderingContext2D
-var worker : Worker? = null
+
 fun main() {
 
     canvas.width = width
     canvas.height = height
 
-    worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
-    println("in render")
-    worker!!.onmessage = {e -> {
+    val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
+
+    worker.onmessage = {e -> {
 
         println("image " + e.data)
 
@@ -32,10 +32,12 @@ fun main() {
 
         }*/
     }}
+    println(worker)
     waitMethod()
 }
 fun waitMethod() {
-    window.setTimeout({waitMethod()}, 50)
+    println("waiting")
+    window.setTimeout({waitMethod()}, 1000)
 }
 fun fillStyle(r: Double, g: Double, b: Double) : String {
     return fillStyle(round(r*255).toInt(), round(g*255).toInt(), round(b*255).toInt())

@@ -12,22 +12,26 @@ var render = function (_, Kotlin) {
   var height;
   var canvas;
   var context;
+  function main$lambda(e) {
+    println(JSON.stringify(e));
+    return Unit;
+  }
   function main$lambda$lambda(closure$e) {
     return function () {
       println(closure$e.data);
       return Unit;
     };
   }
-  function main$lambda(e) {
+  function main$lambda_0(e) {
     return main$lambda$lambda(e);
   }
   function main() {
     canvas.width = width;
     canvas.height = height;
     var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-    worker.onmessage = main$lambda;
-    println(worker);
-    waitMethod();
+    worker.onerror = main$lambda;
+    worker.onmessage = main$lambda_0;
+    println(JSON.stringify(worker));
   }
   function waitMethod$lambda() {
     waitMethod();

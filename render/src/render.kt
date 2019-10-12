@@ -20,12 +20,11 @@ fun main() {
     canvas.height = height
 
     val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
-
+    worker.onerror = {e -> println(JSON.stringify(e))}
     worker.onmessage = {e -> {
         println(e.data)
     }}
-    println(worker)
-    waitMethod()
+    println(JSON.stringify(worker))
 }
 fun waitMethod() {
     println("waiting")

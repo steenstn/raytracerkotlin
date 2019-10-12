@@ -9,7 +9,6 @@ var raytracerkotlin = function (_, Kotlin) {
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
-  var internal = Kotlin.kotlin.coroutines.js.internal;
   var Math_0 = Math;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
@@ -24,7 +23,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var width;
   var height;
   var spheres;
-  function main(continuation) {
+  function main() {
     var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     var xmax = 5;
     var ymax = 5;
@@ -35,7 +34,9 @@ var raytracerkotlin = function (_, Kotlin) {
     for (var screenX = 0; screenX <= tmp$; screenX++) {
       tmp$_0 = height;
       for (var screenY = 0; screenY <= tmp$_0; screenY++) {
-        println(screenY);
+        if (screenY % 50 === 0) {
+          println(screenY);
+        }
         var x = screenX * 6.0 / width - 3.0;
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
@@ -313,7 +314,7 @@ var raytracerkotlin = function (_, Kotlin) {
   width = 1000;
   height = 600;
   spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(4.0, 4.0, 4.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
-  main(internal.EmptyContinuation, false);
+  main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;
 }(typeof raytracerkotlin === 'undefined' ? {} : raytracerkotlin, kotlin);

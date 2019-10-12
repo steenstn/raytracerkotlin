@@ -38,7 +38,7 @@ val spheres = listOf(
 //val canvas = document.getElementById("c") as HTMLCanvasElement
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
-suspend fun main() {
+ fun main() {
 
 
   //  canvas.width = width
@@ -52,7 +52,9 @@ suspend fun main() {
     for(screenX in 0..width) {
 
         for(screenY in 0..height) {
-            println(screenY)
+            if(screenY%50==0) {
+                println(screenY)
+            }
             val x=(screenX*6.0)/width-3.0
             val y=(screenY*6.0)*height/width/height-3.0*height/width
             val dir = Vector(x/xmax, y/ymax, -1.0).normalize()

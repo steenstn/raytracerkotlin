@@ -53,7 +53,7 @@ val spheres = listOf(
     for(screenX in 0..width) {
 
         for(screenY in 0..height) {
-            if(screenY%50==0) {
+            if(screenY%200==0) {
                 println(screenY)
             }/*
             val x=(screenX*6.0)/width-3.0
@@ -75,7 +75,7 @@ val spheres = listOf(
 
         }
     }
-    self.postMessage(endImage)
+    self.postMessage("endImage")
     self.close()
 }
 

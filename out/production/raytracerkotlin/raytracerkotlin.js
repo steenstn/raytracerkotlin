@@ -1,4 +1,4 @@
-importScripts("https://steenstn.github.io/coroutines/out/production/coroutines/lib/kotlin.js")
+importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
 if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
@@ -35,7 +35,7 @@ var raytracerkotlin = function (_, Kotlin) {
     for (var screenX = 0; screenX <= tmp$; screenX++) {
       tmp$_0 = height;
       for (var screenY = 0; screenY <= tmp$_0; screenY++) {
-        if (screenY % 50 === 0) {
+        if (screenY % 200 === 0) {
           println(screenY);
         }
         endColor = new Vector(Random.Default.nextDouble(), Random.Default.nextDouble(), Random.Default.nextDouble());
@@ -44,7 +44,7 @@ var raytracerkotlin = function (_, Kotlin) {
         endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
       }
     }
-    self.postMessage(endImage);
+    self.postMessage('endImage');
     self.close();
   }
   function shootRay(start, direction) {

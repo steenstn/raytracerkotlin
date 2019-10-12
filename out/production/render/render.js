@@ -4,10 +4,9 @@ if (typeof kotlin === 'undefined') {
 var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
-  var toString = Kotlin.toString;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var split = Kotlin.kotlin.text.split_ip8yn$;
   var toDouble = Kotlin.kotlin.text.toDouble_pdl1vz$;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -18,8 +17,6 @@ var render = function (_, Kotlin) {
   function main$lambda(e) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
-    println('message: ' + toString(event.data));
-    println(typeof event.data);
     var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
     var endIndex = imageString.length - 1 | 0;
     var imageList = split(imageString.substring(1, endIndex), [',']);
@@ -33,6 +30,7 @@ var render = function (_, Kotlin) {
         index = index + 3 | 0;
       }
     }
+    println('rendered');
     return Unit;
   }
   function main() {
@@ -70,8 +68,8 @@ var render = function (_, Kotlin) {
   _.main = main;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
-  width = 1000;
-  height = 600;
+  width = 500;
+  height = 300;
   var tmp$, tmp$_0;
   canvas = Kotlin.isType(tmp$ = document.getElementById('c'), HTMLCanvasElement) ? tmp$ : throwCCE();
   context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();

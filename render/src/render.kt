@@ -7,8 +7,8 @@ import kotlin.browser.window
 import kotlin.math.round
 import kotlin.reflect.typeOf
 
-val width = 1000
-val height = 600
+val width = 500
+val height = 300
 /*
 importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
  */
@@ -26,8 +26,8 @@ fun main() {
     worker.addEventListener("message", {e ->
         run {
             val event = e as MessageEvent
-            println("message: " + event.data)
-            println(jsTypeOf(event.data))
+            //println("message: " + event.data)
+            //println(jsTypeOf(event.data))
 
             val imageString = (event.data as String)
             val imageList = imageString.substring(1,imageString.length-1).split(",")
@@ -41,6 +41,7 @@ fun main() {
                     index+=3
                 }
             }
+            println("rendered")
 
         }
     })

@@ -5,8 +5,8 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.random.Random
 
-val width = 1000
-val height = 600
+val width = 500
+val height = 300
 
 /*
 Vänsterorienterat
@@ -27,45 +27,48 @@ val spheres = listOf(
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
  fun main() {
-    println("Started webworker")
+     println("Started webworker")
 
-  //  canvas.width = width
-  //  canvas.height = height
+     //  canvas.width = width
+     //  canvas.height = height
 
-    val xmax = 5
-    val ymax = 5
-    var endColor = Vector()
-    var endImage = arrayListOf<Double>()
-    var index = 0
-    for(screenY in 0..height) {
+     while(true){
+     val xmax = 5
+     val ymax = 5
+     var endColor = Vector()
+     var endImage = arrayListOf<Double>()
+     var index = 0
+     for (screenY in 0..height) {
 
-        for(screenX in 0..width) {
-            val x=(screenX*6.0)/width-3.0
-            val y=(screenY*6.0)*height/width/height-3.0*height/width
-            val dir = Vector(x/xmax, y/ymax, -1.0).normalize()
+         for (screenX in 0..width) {
+             val x = (screenX * 6.0) / width - 3.0
+             val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
+             val dir = Vector(x / xmax, y / ymax, -1.0).normalize()
 
-            val s = Vector(0.0,0.0,7.0)
+             val s = Vector(0.0, 0.0, 7.0)
 
-            val numRays = 10
-            for (i in 0..numRays) {
-                endColor += shootRay(s, dir)
-            }
+             val numRays = 10
+             for (i in 0..numRays) {
+                 endColor += shootRay(s, dir)
+             }
 
-            endColor/=numRays.toDouble()
-            endImage.add(endColor.x)
-            endImage.add(endColor.y)
-            endImage.add(endColor.z)
+             endColor /= numRays.toDouble()
+             endImage.add(endColor.x)
+             endImage.add(endColor.y)
+             endImage.add(endColor.z)
 
 
-        }
+         }
 
-        if(screenY%200==0) {
-            println(screenY)
-        }
-    }
+         if (screenY % 200 == 0) {
+             println(screenY)
+         }
+     }
      self.postMessage(JSON.stringify(endImage))
+
      println("posted message")
-   // self.close()
+ }
+     // self.close()
 }
 
  fun shootRay(start : Vector, direction : Vector) : Vector {

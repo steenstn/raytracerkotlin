@@ -46,7 +46,7 @@ val spheres = listOf(
 
             val s = Vector(0.0,0.0,7.0)
 
-            val numRays = 2
+            val numRays = 10
             for (i in 0..numRays) {
                 endColor += shootRay(s, dir)
             }
@@ -93,7 +93,7 @@ val spheres = listOf(
             }
         }
     }
-    return Vector(0.7,0.7,0.7)
+    return Vector(0.0,0.0,0.0)
 }
 fun fillStyle(r: Double, g: Double, b: Double) : String {
     return fillStyle(round(r*255).toInt(), round(g*255).toInt(), round(b*255).toInt())

@@ -1,5 +1,5 @@
-importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
-if (typeof kotlin === 'undefined') {
+importScripts("https://steenstn.github.io/coroutines/out/production/coroutines/lib/kotlin.js")
+f (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
 var raytracerkotlin = function (_, Kotlin) {
@@ -38,15 +38,7 @@ var raytracerkotlin = function (_, Kotlin) {
         if (screenY % 50 === 0) {
           println(screenY);
         }
-        var x = screenX * 6.0 / width - 3.0;
-        var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
-        var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
-        var s = new Vector(0.0, 0.0, 7.0);
-        var numRays = 10;
-        for (var i = 0; i <= numRays; i++) {
-          endColor = endColor.plus_spvnod$(shootRay(s, dir));
-        }
-        endColor = endColor.div_14dthe$(numRays);
+        endColor = new Vector(Random.Default.nextDouble(), Random.Default.nextDouble(), Random.Default.nextDouble());
         endImage[tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1] = endColor.x;
         endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
         endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;

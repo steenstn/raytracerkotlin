@@ -57,7 +57,7 @@ external val self: DedicatedWorkerGlobalScope
 
         }
     }*/
-    self.postMessage("endImage")
+     self.postMessage("webworker done!")
      println("posted message")
    // self.close()
 }

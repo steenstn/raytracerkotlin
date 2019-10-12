@@ -22,15 +22,7 @@ fun main() {
     val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
 
     worker.onmessage = {e -> {
-
-        println("image " + e.data)
-
-        /*for(i in 0..width*height*3) {
-
-                context.fillStyle = fillStyle(endColor)
-                context.fillRect(i.toDouble()%width,i.toDouble(),1.0,1.0)
-
-        }*/
+        println(e.data)
     }}
     println(worker)
     waitMethod()

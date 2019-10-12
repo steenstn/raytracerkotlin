@@ -21,7 +21,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var height;
   function main() {
     println('Started webworker');
-    self.postMessage('endImage');
+    self.postMessage('webworker done!');
     println('posted message');
   }
   function Material(color, emittance, type) {

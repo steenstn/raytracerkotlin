@@ -4,7 +4,6 @@ if (typeof kotlin === 'undefined') {
 var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
-  var toString = Kotlin.toString;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
@@ -15,7 +14,7 @@ var render = function (_, Kotlin) {
   var context;
   function main$lambda$lambda(closure$e) {
     return function () {
-      println('image ' + toString(closure$e.data));
+      println(closure$e.data);
       return Unit;
     };
   }

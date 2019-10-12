@@ -22,13 +22,17 @@ var render = function (_, Kotlin) {
   function main$lambda(e) {
     return main$lambda$lambda(e);
   }
+  function main$lambda_0(e) {
+    println('message: ' + e.type);
+    return Unit;
+  }
   function main$lambda$lambda_0(closure$e) {
     return function () {
       println(closure$e.data);
       return Unit;
     };
   }
-  function main$lambda_0(e) {
+  function main$lambda_1(e) {
     return main$lambda$lambda_0(e);
   }
   function main() {
@@ -36,8 +40,8 @@ var render = function (_, Kotlin) {
     canvas.height = height;
     var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
     worker.onerror = main$lambda;
-    worker.onmessage = main$lambda_0;
-    println(JSON.stringify(worker));
+    worker.addEventListener('message', main$lambda_0);
+    worker.onmessage = main$lambda_1;
   }
   function waitMethod$lambda() {
     waitMethod();

@@ -23,10 +23,10 @@ fun main() {
     worker.onerror = {e -> {
         println("error!")
         println(e.type)}}
+    worker.addEventListener("message", {e -> println("message: " + e.type)})
     worker.onmessage = {e -> {
         println(e.data)
     }}
-    println(JSON.stringify(worker))
 }
 fun waitMethod() {
     println("waiting")

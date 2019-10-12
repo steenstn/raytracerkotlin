@@ -4,12 +4,15 @@ if (typeof kotlin === 'undefined') {
 }
 var raytracerkotlin = function (_, Kotlin) {
   'use strict';
+  var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var Random = Kotlin.kotlin.random.Random;
+  var round = Kotlin.kotlin.math.round_14dthe$;
+  var numberToInt = Kotlin.numberToInt;
+  var Math_0 = Math;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
-  var Math_0 = Math;
-  var Random = Kotlin.kotlin.random.Random;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   Material$Type.prototype = Object.create(Enum.prototype);
   Material$Type.prototype.constructor = Material$Type;
@@ -19,10 +22,79 @@ var raytracerkotlin = function (_, Kotlin) {
   Sphere.prototype.constructor = Sphere;
   var width;
   var height;
+  var spheres;
   function main() {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     println('Started webworker');
-    self.postMessage('webworker done!');
+    var xmax = 5;
+    var ymax = 5;
+    var endColor = Vector_init();
+    var endImage = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
+    var index = 0;
+    tmp$ = width;
+    for (var screenX = 0; screenX <= tmp$; screenX++) {
+      tmp$_0 = height;
+      for (var screenY = 0; screenY <= tmp$_0; screenY++) {
+        if (screenY % 200 === 0) {
+          println(screenY);
+        }
+        var x = screenX * 6.0 / width - 3.0;
+        var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
+        var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
+        var s = new Vector(0.0, 0.0, 7.0);
+        var numRays = 10;
+        for (var i = 0; i <= numRays; i++) {
+          endColor = endColor.plus_spvnod$(shootRay(s, dir));
+        }
+        endColor = endColor.div_14dthe$(numRays);
+        endColor = new Vector(Random.Default.nextDouble(), Random.Default.nextDouble(), Random.Default.nextDouble());
+        endImage[tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1] = endColor.x;
+        endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
+        endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
+      }
+    }
+    self.postMessage(endImage);
     println('posted message');
+  }
+  function shootRay(start, direction) {
+    var tmp$, tmp$_0;
+    tmp$ = spheres.iterator();
+    while (tmp$.hasNext()) {
+      var sphere = tmp$.next();
+      if ((tmp$_0 = sphere.getIntersection_nmolro$(start, direction)) != null) {
+        if (tmp$_0.material.type === Material$Type$LIGHT_getInstance()) {
+          return tmp$_0.material.emittance;
+        }
+         else {
+          var randomVector = Vector$Companion_getInstance().random();
+          var crossed = randomVector.cross_spvnod$(tmp$_0.normal).normalize();
+          var eps1 = Random.Default.nextDouble() * 3.14159 * 2.0;
+          var x = Random.Default.nextDouble();
+          var eps2 = Math_0.sqrt(x);
+          var x_0 = Math_0.cos(eps1) * eps2;
+          var y = Math_0.sin(eps1) * eps2;
+          var x_1 = 1.0 - eps2 * eps2;
+          var z = Math_0.sqrt(x_1);
+          var tangent = tmp$_0.normal.cross_spvnod$(crossed);
+          var newDirection = crossed.times_14dthe$(x_0).plus_spvnod$(tangent.times_14dthe$(y)).plus_spvnod$(tmp$_0.normal.times_14dthe$(z));
+          var reflected = shootRay(tmp$_0.position, newDirection);
+          return tmp$_0.material.color.times_spvnod$(reflected);
+        }
+      }
+    }
+    return new Vector(0.7, 0.7, 0.7);
+  }
+  function fillStyle(r, g, b) {
+    return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));
+  }
+  function fillStyle_0(r, g, b) {
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+  }
+  function fillStyle_1(color) {
+    var r = numberToInt(color.x * 255);
+    var g = numberToInt(color.y * 255);
+    var b = numberToInt(color.z * 255);
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
   }
   function Material(color, emittance, type) {
     this.color = color;
@@ -215,7 +287,16 @@ var raytracerkotlin = function (_, Kotlin) {
       return height;
     }
   });
+  Object.defineProperty(_, 'spheres', {
+    get: function () {
+      return spheres;
+    }
+  });
   _.main = main;
+  _.shootRay_nmolro$ = shootRay;
+  _.fillStyle_yvo9jy$ = fillStyle;
+  _.fillStyle_qt1dr2$ = fillStyle_0;
+  _.fillStyle_spvnod$ = fillStyle_1;
   Object.defineProperty(Material$Type, 'DIFFUSE', {
     get: Material$Type$DIFFUSE_getInstance
   });
@@ -235,6 +316,7 @@ var raytracerkotlin = function (_, Kotlin) {
   _.Vector = Vector;
   width = 1000;
   height = 600;
+  spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(4.0, 4.0, 4.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

@@ -4,26 +4,16 @@ if (typeof kotlin === 'undefined') {
 var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
+  var toString = Kotlin.toString;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
-  var toString = Kotlin.toString;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var width;
   var height;
   var canvas;
   var context;
-  function main$lambda$lambda(closure$e) {
-    return function () {
-      println('error!');
-      println(closure$e.type);
-      return Unit;
-    };
-  }
   function main$lambda(e) {
-    return main$lambda$lambda(e);
-  }
-  function main$lambda_0(e) {
     var tmp$;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
     println('message: ' + toString(event.data));
@@ -33,16 +23,7 @@ var render = function (_, Kotlin) {
     canvas.width = width;
     canvas.height = height;
     var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-    worker.onerror = main$lambda;
-    worker.addEventListener('message', main$lambda_0);
-  }
-  function waitMethod$lambda() {
-    waitMethod();
-    return Unit;
-  }
-  function waitMethod() {
-    println('waiting');
-    window.setTimeout(waitMethod$lambda, 1000);
+    worker.addEventListener('message', main$lambda);
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));
@@ -71,7 +52,6 @@ var render = function (_, Kotlin) {
     }
   });
   _.main = main;
-  _.waitMethod = waitMethod;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
   width = 1000;

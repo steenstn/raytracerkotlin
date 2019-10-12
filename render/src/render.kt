@@ -21,21 +21,17 @@ fun main() {
     canvas.height = height
 
     val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
-    worker.onerror = {e -> {
-        println("error!")
-        println(e.type)}}
+
     worker.addEventListener("message", {e ->
         run {
             val event = e as MessageEvent
             println("message: " + event.data)
+
         }
     })
 
 }
-fun waitMethod() {
-    println("waiting")
-    window.setTimeout({waitMethod()}, 1000)
-}
+
 fun fillStyle(r: Double, g: Double, b: Double) : String {
     return fillStyle(round(r*255).toInt(), round(g*255).toInt(), round(b*255).toInt())
 }

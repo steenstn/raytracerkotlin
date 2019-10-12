@@ -1,4 +1,9 @@
 import org.w3c.dom.DedicatedWorkerGlobalScope
+import kotlin.math.cos
+import kotlin.math.round
+import kotlin.math.sin
+import kotlin.math.sqrt
+import kotlin.random.Random
 
 val width = 1000
 val height = 600
@@ -11,13 +16,13 @@ z går mot skärmen
 
 */
 external val self: DedicatedWorkerGlobalScope
-/*val spheres = listOf(
+val spheres = listOf(
         Sphere(3.0, -2.0, 0.0, 1.0, Material(Vector(), Vector(4.0,4.0,4.0), Material.Type.LIGHT)),
         Sphere(-1.0, 0.0, -1.5, 1.0, Material(Vector(1.0,0.6,0.1),Vector(), Material.Type.DIFFUSE)),
         Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0), Vector(), Material.Type.DIFFUSE)),
         Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.5,0.2), Vector(), Material.Type.DIFFUSE))
         )
-*/
+
 //val canvas = document.getElementById("c") as HTMLCanvasElement
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
@@ -26,13 +31,13 @@ external val self: DedicatedWorkerGlobalScope
 
   //  canvas.width = width
   //  canvas.height = height
-/*
+
     val xmax = 5
     val ymax = 5
     var endColor = Vector()
     var endImage = DoubleArray(width*height*3)
-    var index = 0*/
-   /* for(screenX in 0..width) {
+    var index = 0
+    for(screenX in 0..width) {
 
         for(screenY in 0..height) {
             if(screenY%200==0) {
@@ -56,12 +61,12 @@ external val self: DedicatedWorkerGlobalScope
             endImage[index++] = endColor.z
 
         }
-    }*/
-     self.postMessage("webworker done!")
+    }
+     self.postMessage(endImage)
      println("posted message")
    // self.close()
 }
-/*
+
  fun shootRay(start : Vector, direction : Vector) : Vector {
 
     for(sphere in spheres) {
@@ -103,4 +108,4 @@ fun fillStyle(color : Vector) : String {
     val b = (color.z*255).toInt()
 
     return "rgb($r, $g, $b)"
-}*/
+}

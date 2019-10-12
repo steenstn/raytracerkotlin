@@ -21,7 +21,8 @@ var render = function (_, Kotlin) {
     println('message: ' + toString(event.data));
     println(typeof event.data);
     var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
-    var imageList = split(imageString, [',']);
+    var endIndex = imageString.length - 1 | 0;
+    var imageList = split(imageString.substring(1, endIndex), [',']);
     var index = 0;
     tmp$_1 = height;
     for (var y = 0; y <= tmp$_1; y++) {

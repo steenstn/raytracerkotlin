@@ -30,7 +30,7 @@ fun main() {
             println(jsTypeOf(event.data))
 
             val imageString = (event.data as String)
-            val imageList = imageString.split(",")
+            val imageList = imageString.substring(1,imageString.length-1).split(",")
 
 
             var index = 0

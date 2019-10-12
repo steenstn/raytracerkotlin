@@ -27,9 +27,9 @@ fun main() {
         run {
             val event = e as MessageEvent
             println("message: " + event.data)
+            println(jsTypeOf(event.data))
 
-            val imageList = event.data as ArrayList<Double>
-            println(jsTypeOf(imageList))
+            val imageList = JSON.parse<ArrayList<Double>>(event.data as String)
 
 
             var index = 0

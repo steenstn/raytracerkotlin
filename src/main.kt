@@ -76,9 +76,9 @@ val spheres = listOf(
         }
     }*/
     self.postMessage("endImage")
-    self.close()
+   // self.close()
 }
-
+/*
  fun shootRay(start : Vector, direction : Vector) : Vector {
 
     for(sphere in spheres) {
@@ -120,4 +120,4 @@ fun fillStyle(color : Vector) : String {
     val b = (color.z*255).toInt()
 
     return "rgb($r, $g, $b)"
-}
+}*/

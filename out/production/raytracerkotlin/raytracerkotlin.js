@@ -4,7 +4,6 @@ if (typeof kotlin === 'undefined') {
 }
 var raytracerkotlin = function (_, Kotlin) {
   'use strict';
-  var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
@@ -20,14 +19,8 @@ var raytracerkotlin = function (_, Kotlin) {
   Sphere.prototype.constructor = Sphere;
   var width;
   var height;
-  var spheres;
   function main() {
     println('Started webworker');
-    var xmax = 5;
-    var ymax = 5;
-    var endColor = Vector_init();
-    var endImage = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
-    var index = 0;
     self.postMessage('endImage');
   }
   function Material(color, emittance, type) {
@@ -221,11 +214,6 @@ var raytracerkotlin = function (_, Kotlin) {
       return height;
     }
   });
-  Object.defineProperty(_, 'spheres', {
-    get: function () {
-      return spheres;
-    }
-  });
   _.main = main;
   Object.defineProperty(Material$Type, 'DIFFUSE', {
     get: Material$Type$DIFFUSE_getInstance
@@ -246,7 +234,6 @@ var raytracerkotlin = function (_, Kotlin) {
   _.Vector = Vector;
   width = 1000;
   height = 600;
-  spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(4.0, 4.0, 4.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

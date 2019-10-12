@@ -29,13 +29,13 @@ z går mot skärmen
 
 */
 external val self: DedicatedWorkerGlobalScope
-val spheres = listOf(
+/*val spheres = listOf(
         Sphere(3.0, -2.0, 0.0, 1.0, Material(Vector(), Vector(4.0,4.0,4.0), Material.Type.LIGHT)),
         Sphere(-1.0, 0.0, -1.5, 1.0, Material(Vector(1.0,0.6,0.1),Vector(), Material.Type.DIFFUSE)),
         Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0), Vector(), Material.Type.DIFFUSE)),
         Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.5,0.2), Vector(), Material.Type.DIFFUSE))
         )
-
+*/
 //val canvas = document.getElementById("c") as HTMLCanvasElement
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
@@ -44,12 +44,12 @@ val spheres = listOf(
 
   //  canvas.width = width
   //  canvas.height = height
-
+/*
     val xmax = 5
     val ymax = 5
     var endColor = Vector()
     var endImage = DoubleArray(width*height*3)
-    var index = 0
+    var index = 0*/
    /* for(screenX in 0..width) {
 
         for(screenY in 0..height) {

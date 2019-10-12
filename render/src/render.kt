@@ -7,7 +7,10 @@ import kotlin.math.round
 
 val width = 1000
 val height = 600
-//importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
+/*
+importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
+ */
+
 val canvas = document.getElementById("c") as HTMLCanvasElement
 val context = canvas.getContext("2d") as CanvasRenderingContext2D
 var worker : Worker? = null

@@ -7,12 +7,14 @@ var render = function (_, Kotlin) {
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toString = Kotlin.toString;
   var Unit = Kotlin.kotlin.Unit;
+  var ensureNotNull = Kotlin.ensureNotNull;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var width;
   var height;
   var canvas;
   var context;
+  var worker;
   function main$lambda$lambda(closure$e) {
     return function () {
       println('image ' + toString(closure$e.data));
@@ -25,9 +27,9 @@ var render = function (_, Kotlin) {
   function main() {
     canvas.width = width;
     canvas.height = height;
-    var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
+    worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
     println('in render');
-    worker.onmessage = main$lambda;
+    ensureNotNull(worker).onmessage = main$lambda;
     waitMethod();
   }
   function waitMethod$lambda() {
@@ -63,6 +65,14 @@ var render = function (_, Kotlin) {
       return context;
     }
   });
+  Object.defineProperty(_, 'worker', {
+    get: function () {
+      return worker;
+    },
+    set: function (value) {
+      worker = value;
+    }
+  });
   _.main = main;
   _.waitMethod = waitMethod;
   _.fillStyle_yvo9jy$ = fillStyle;
@@ -72,6 +82,7 @@ var render = function (_, Kotlin) {
   var tmp$, tmp$_0;
   canvas = Kotlin.isType(tmp$ = document.getElementById('c'), HTMLCanvasElement) ? tmp$ : throwCCE();
   context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();
+  worker = null;
   main();
   Kotlin.defineModule('render', _);
   return _;

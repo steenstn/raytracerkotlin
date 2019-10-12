@@ -10,15 +10,15 @@ val height = 600
 //importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
 val canvas = document.getElementById("c") as HTMLCanvasElement
 val context = canvas.getContext("2d") as CanvasRenderingContext2D
-
+var worker : Worker? = null
 fun main() {
 
     canvas.width = width
     canvas.height = height
 
-    val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
+    worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
     println("in render")
-    worker.onmessage = {e -> {
+    worker!!.onmessage = {e -> {
 
         println("image " + e.data)
 

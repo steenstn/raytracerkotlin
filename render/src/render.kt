@@ -26,7 +26,7 @@ fun main() {
         run {
             val event = e as MessageEvent
             println("message: " + event.data)
-            val imageList = event.data as List<Double>
+            val imageList = JSON.parse<List<Double>>(JSON.stringify(event.data))
             var index = 0
             for(y in 0..height) {
                 for(x in 0..width) {

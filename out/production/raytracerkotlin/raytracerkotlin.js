@@ -5,6 +5,7 @@ if (typeof kotlin === 'undefined') {
 var raytracerkotlin = function (_, Kotlin) {
   'use strict';
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -34,6 +35,7 @@ var raytracerkotlin = function (_, Kotlin) {
     for (var screenX = 0; screenX <= tmp$; screenX++) {
       tmp$_0 = height;
       for (var screenY = 0; screenY <= tmp$_0; screenY++) {
+        println(screenY);
         var x = screenX * 6.0 / width - 3.0;
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();

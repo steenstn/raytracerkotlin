@@ -50,12 +50,12 @@ val spheres = listOf(
     var endColor = Vector()
     var endImage = DoubleArray(width*height*3)
     var index = 0
-    for(screenX in 0..width) {
+   /* for(screenX in 0..width) {
 
         for(screenY in 0..height) {
             if(screenY%200==0) {
                 println(screenY)
-            }/*
+            }
             val x=(screenX*6.0)/width-3.0
             val y=(screenY*6.0)*height/width/height-3.0*height/width
             val dir = Vector(x/xmax, y/ymax, -1.0).normalize()
@@ -67,14 +67,14 @@ val spheres = listOf(
                 endColor += shootRay(s, dir)
             }
 
-            endColor/=numRays.toDouble()*/
+            endColor/=numRays.toDouble()
             endColor = Vector(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
             endImage[index++] = endColor.x
             endImage[index++] = endColor.y
             endImage[index++] = endColor.z
 
         }
-    }
+    }*/
     self.postMessage("endImage")
     self.close()
 }

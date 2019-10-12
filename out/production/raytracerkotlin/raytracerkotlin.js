@@ -24,26 +24,12 @@ var raytracerkotlin = function (_, Kotlin) {
   var height;
   var spheres;
   function main() {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     println('Started webworker');
     var xmax = 5;
     var ymax = 5;
     var endColor = Vector_init();
     var endImage = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
     var index = 0;
-    tmp$ = width;
-    for (var screenX = 0; screenX <= tmp$; screenX++) {
-      tmp$_0 = height;
-      for (var screenY = 0; screenY <= tmp$_0; screenY++) {
-        if (screenY % 200 === 0) {
-          println(screenY);
-        }
-        endColor = new Vector(Random.Default.nextDouble(), Random.Default.nextDouble(), Random.Default.nextDouble());
-        endImage[tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1] = endColor.x;
-        endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
-        endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
-      }
-    }
     self.postMessage('endImage');
     self.close();
   }

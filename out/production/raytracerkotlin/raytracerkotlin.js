@@ -9,6 +9,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Math_0 = Math;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
@@ -24,12 +25,12 @@ var raytracerkotlin = function (_, Kotlin) {
   var height;
   var spheres;
   function main() {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+    var tmp$, tmp$_0;
     println('Started webworker');
     var xmax = 5;
     var ymax = 5;
     var endColor = Vector_init();
-    var endImage = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
+    var endImage = ArrayList_init();
     var index = 0;
     tmp$ = height;
     for (var screenY = 0; screenY <= tmp$; screenY++) {
@@ -45,9 +46,9 @@ var raytracerkotlin = function (_, Kotlin) {
         }
         endColor = endColor.div_14dthe$(numRays);
         endColor = new Vector(Random.Default.nextDouble(), Random.Default.nextDouble(), Random.Default.nextDouble());
-        endImage[tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1] = endColor.x;
-        endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
-        endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
+        endImage.add_11rb$(endColor.x);
+        endImage.add_11rb$(endColor.y);
+        endImage.add_11rb$(endColor.z);
       }
       if (screenY % 200 === 0) {
         println(screenY);

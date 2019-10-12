@@ -35,7 +35,7 @@ val spheres = listOf(
     val xmax = 5
     val ymax = 5
     var endColor = Vector()
-    var endImage = DoubleArray(width*height*3)
+    var endImage = arrayListOf<Double>()
     var index = 0
     for(screenY in 0..height) {
 
@@ -53,9 +53,10 @@ val spheres = listOf(
 
             endColor/=numRays.toDouble()
             endColor = Vector(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
-            endImage[index++] = endColor.x
-            endImage[index++] = endColor.y
-            endImage[index++] = endColor.z
+            endImage.add(endColor.x)
+            endImage.add(endColor.y)
+            endImage.add(endColor.z)
+
 
         }
 

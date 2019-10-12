@@ -4,7 +4,6 @@ if (typeof kotlin === 'undefined') {
 var raytracerkotlin = function (_, Kotlin) {
   'use strict';
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
-  var throwCCE = Kotlin.throwCCE;
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -23,14 +22,13 @@ var raytracerkotlin = function (_, Kotlin) {
   var width;
   var height;
   var spheres;
-  var canvas;
-  var context;
   function main(continuation) {
-    var tmp$, tmp$_0;
-    canvas.width = width;
-    canvas.height = height;
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     var xmax = 5;
     var ymax = 5;
+    var endColor = Vector_init();
+    var endImage = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
+    var index = 0;
     tmp$ = width;
     for (var screenX = 0; screenX <= tmp$; screenX++) {
       tmp$_0 = height;
@@ -39,16 +37,17 @@ var raytracerkotlin = function (_, Kotlin) {
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
         var s = new Vector(0.0, 0.0, 7.0);
-        var endColor = Vector_init();
         var numRays = 20;
         for (var i = 0; i <= numRays; i++) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        context.fillStyle = fillStyle_1(endColor);
-        context.fillRect(screenX, screenY, 1.0, 1.0);
+        endImage[tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1] = endColor.x;
+        endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
+        endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
       }
     }
+    self.postMessage(endImage);
   }
   function shootRay(start, direction) {
     var tmp$, tmp$_0;
@@ -286,16 +285,6 @@ var raytracerkotlin = function (_, Kotlin) {
       return spheres;
     }
   });
-  Object.defineProperty(_, 'canvas', {
-    get: function () {
-      return canvas;
-    }
-  });
-  Object.defineProperty(_, 'context', {
-    get: function () {
-      return context;
-    }
-  });
   _.main = main;
   _.shootRay_nmolro$ = shootRay;
   _.fillStyle_yvo9jy$ = fillStyle;
@@ -321,9 +310,6 @@ var raytracerkotlin = function (_, Kotlin) {
   width = 1000;
   height = 600;
   spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(4.0, 4.0, 4.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
-  var tmp$, tmp$_0;
-  canvas = Kotlin.isType(tmp$ = document.getElementById('c'), HTMLCanvasElement) ? tmp$ : throwCCE();
-  context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();
   main(internal.EmptyContinuation, false);
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

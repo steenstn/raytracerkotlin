@@ -45,7 +45,6 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        endColor = new Vector(Random.Default.nextDouble(), Random.Default.nextDouble(), Random.Default.nextDouble());
         endImage.add_11rb$(endColor.x);
         endImage.add_11rb$(endColor.y);
         endImage.add_11rb$(endColor.z);

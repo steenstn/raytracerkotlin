@@ -52,7 +52,6 @@ val spheres = listOf(
             }
 
             endColor/=numRays.toDouble()
-            endColor = Vector(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
             endImage.add(endColor.x)
             endImage.add(endColor.y)
             endImage.add(endColor.z)

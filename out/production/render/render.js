@@ -6,6 +6,7 @@ var render = function (_, Kotlin) {
   var throwCCE = Kotlin.throwCCE;
   var toString = Kotlin.toString;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var List = Kotlin.kotlin.collections.List;
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -14,9 +15,20 @@ var render = function (_, Kotlin) {
   var canvas;
   var context;
   function main$lambda(e) {
-    var tmp$;
+    var tmp$, tmp$_0, tmp$_1, tmp$_2;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
     println('message: ' + toString(event.data));
+    var imageList = Kotlin.isType(tmp$_0 = event.data, List) ? tmp$_0 : throwCCE();
+    var index = 0;
+    tmp$_1 = height;
+    for (var y = 0; y <= tmp$_1; y++) {
+      tmp$_2 = width;
+      for (var x = 0; x <= tmp$_2; x++) {
+        context.fillStyle = fillStyle(imageList.get_za3lpa$(index), imageList.get_za3lpa$(index + 1 | 0), imageList.get_za3lpa$(index + 2 | 0));
+        context.fillRect(x, y, 1.0, 1.0);
+        index = index + 3 | 0;
+      }
+    }
     return Unit;
   }
   function main() {

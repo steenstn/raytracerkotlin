@@ -1,5 +1,6 @@
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.MessageEvent
 import org.w3c.dom.Worker
 import kotlin.browser.document
 import kotlin.browser.window
@@ -23,10 +24,13 @@ fun main() {
     worker.onerror = {e -> {
         println("error!")
         println(e.type)}}
-    worker.addEventListener("message", {e -> println("message: " + e.type)})
-    worker.onmessage = {e -> {
-        println(e.data)
-    }}
+    worker.addEventListener("message", {e ->
+        run {
+            val event = e as MessageEvent
+            println("message: " + event.data)
+        }
+    })
+
 }
 fun waitMethod() {
     println("waiting")

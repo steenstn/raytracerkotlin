@@ -6,6 +6,7 @@ var render = function (_, Kotlin) {
   var throwCCE = Kotlin.throwCCE;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
+  var toString = Kotlin.toString;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var width;
@@ -23,17 +24,10 @@ var render = function (_, Kotlin) {
     return main$lambda$lambda(e);
   }
   function main$lambda_0(e) {
-    println('message: ' + e.type);
+    var tmp$;
+    var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
+    println('message: ' + toString(event.data));
     return Unit;
-  }
-  function main$lambda$lambda_0(closure$e) {
-    return function () {
-      println(closure$e.data);
-      return Unit;
-    };
-  }
-  function main$lambda_1(e) {
-    return main$lambda$lambda_0(e);
   }
   function main() {
     canvas.width = width;
@@ -41,7 +35,6 @@ var render = function (_, Kotlin) {
     var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
     worker.onerror = main$lambda;
     worker.addEventListener('message', main$lambda_0);
-    worker.onmessage = main$lambda_1;
   }
   function waitMethod$lambda() {
     waitMethod();

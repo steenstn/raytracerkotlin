@@ -12,18 +12,24 @@ var render = function (_, Kotlin) {
   var height;
   var canvas;
   var context;
-  function main$lambda(e) {
-    println(JSON.stringify(e));
-    return Unit;
-  }
   function main$lambda$lambda(closure$e) {
+    return function () {
+      println('error!');
+      println(closure$e.type);
+      return Unit;
+    };
+  }
+  function main$lambda(e) {
+    return main$lambda$lambda(e);
+  }
+  function main$lambda$lambda_0(closure$e) {
     return function () {
       println(closure$e.data);
       return Unit;
     };
   }
   function main$lambda_0(e) {
-    return main$lambda$lambda(e);
+    return main$lambda$lambda_0(e);
   }
   function main() {
     canvas.width = width;

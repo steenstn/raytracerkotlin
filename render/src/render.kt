@@ -29,13 +29,14 @@ fun main() {
             println("message: " + event.data)
             println(jsTypeOf(event.data))
 
-            val imageList = JSON.parse<ArrayList<Double>>(event.data as String)
-            println(imageList)
+            val imageString = (event.data as String)
+            val imageList = imageString.split(",")
+
 
             var index = 0
             for(y in 0..height) {
                 for(x in 0..width) {
-                    context.fillStyle = fillStyle(imageList[index], imageList[index+1], imageList[index+2])
+                    context.fillStyle = fillStyle(imageList[index].toDouble(), imageList[index+1].toDouble(), imageList[index+2].toDouble())
                     context.fillRect(x.toDouble(), y.toDouble(),1.0,1.0)
                     index+=3
                 }

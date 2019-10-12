@@ -5,6 +5,7 @@ import org.w3c.dom.Worker
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.math.round
+import kotlin.reflect.typeOf
 
 val width = 1000
 val height = 600
@@ -27,7 +28,9 @@ fun main() {
             val event = e as MessageEvent
             println("message: " + event.data)
             val imageList = JSON.parse<List<Double>>(event.data as String)
-            println(imageList)
+            println(jsTypeOf(imageList))
+            
+
             var index = 0
             for(y in 0..height) {
                 for(x in 0..width) {

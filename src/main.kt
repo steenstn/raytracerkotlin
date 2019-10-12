@@ -37,20 +37,6 @@ val spheres = listOf(
 val canvas = document.getElementById("c") as HTMLCanvasElement
 val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
-suspend fun <T> Promise<T>.await(): T = suspendCoroutine { cont ->
-    then({ cont.resume(it) }, { cont.resumeWithException(it) })
-}
-fun launch(block: suspend () -> Unit) {
-    block.startCoroutine(object : Continuation<Unit> {
-        override fun resumeWith(result: Result<Unit>) {
-
-        }
-
-        override val context: CoroutineContext get() = EmptyCoroutineContext
-         fun resume(value: Unit) {}
-         fun resumeWithException(e: Throwable) { console.log("Coroutine failed: $e") }
-    })
-}
 suspend fun main() {
 
 
@@ -59,7 +45,7 @@ suspend fun main() {
 
     val xmax = 5
     val ymax = 5
-    launch{
+
         for(screenX in 0..width) {
 
             for(screenY in 0..height) {
@@ -82,11 +68,11 @@ suspend fun main() {
         }
 
 
-    }
+
 
 }
 
-suspend fun shootRay(start : Vector, direction : Vector) : Vector {
+ fun shootRay(start : Vector, direction : Vector) : Vector {
 
     for(sphere in spheres) {
 

@@ -1,5 +1,4 @@
-importScripts("https://steenstn.github.io/coroutines/out/production/coroutines/lib/kotlin.js")
-f (typeof kotlin === 'undefined') {
+if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
 var raytracerkotlin = function (_, Kotlin) {
@@ -45,6 +44,7 @@ var raytracerkotlin = function (_, Kotlin) {
       }
     }
     self.postMessage(endImage);
+    self.close();
   }
   function shootRay(start, direction) {
     var tmp$, tmp$_0;

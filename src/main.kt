@@ -76,7 +76,7 @@ val spheres = listOf(
         }
     }
     self.postMessage(endImage)
-
+    self.close()
 }
 
  fun shootRay(start : Vector, direction : Vector) : Vector {

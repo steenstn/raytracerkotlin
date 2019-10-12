@@ -2,6 +2,7 @@ import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.Worker
 import kotlin.browser.document
+import kotlin.browser.window
 import kotlin.math.round
 
 val width = 1000
@@ -16,6 +17,7 @@ fun main() {
     canvas.height = height
 
     val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
+    println("in render")
     worker.onmessage = {e -> {
 
         println("image " + e.data)
@@ -27,8 +29,11 @@ fun main() {
 
         }*/
     }}
+    waitMethod()
 }
-
+fun waitMethod() {
+    window.setTimeout({waitMethod()}, 50)
+}
 fun fillStyle(r: Double, g: Double, b: Double) : String {
     return fillStyle(round(r*255).toInt(), round(g*255).toInt(), round(b*255).toInt())
 }

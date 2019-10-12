@@ -4,8 +4,8 @@ if (typeof kotlin === 'undefined') {
 var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
-  var toString = Kotlin.toString;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var toString = Kotlin.toString;
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -26,7 +26,16 @@ var render = function (_, Kotlin) {
     canvas.width = width;
     canvas.height = height;
     var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
+    println('in render');
     worker.onmessage = main$lambda;
+    waitMethod();
+  }
+  function waitMethod$lambda() {
+    waitMethod();
+    return Unit;
+  }
+  function waitMethod() {
+    window.setTimeout(waitMethod$lambda, 50);
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));
@@ -55,6 +64,7 @@ var render = function (_, Kotlin) {
     }
   });
   _.main = main;
+  _.waitMethod = waitMethod;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
   width = 1000;

@@ -37,19 +37,16 @@ val spheres = listOf(
     var endColor = Vector()
     var endImage = DoubleArray(width*height*3)
     var index = 0
-    for(screenX in 0..width) {
+    for(screenY in 0..height) {
 
-        for(screenY in 0..height) {
-            if(screenY%200==0) {
-                println(screenY)
-            }
+        for(screenX in 0..width) {
             val x=(screenX*6.0)/width-3.0
             val y=(screenY*6.0)*height/width/height-3.0*height/width
             val dir = Vector(x/xmax, y/ymax, -1.0).normalize()
 
             val s = Vector(0.0,0.0,7.0)
 
-            val numRays = 10
+            val numRays = 2
             for (i in 0..numRays) {
                 endColor += shootRay(s, dir)
             }
@@ -61,8 +58,12 @@ val spheres = listOf(
             endImage[index++] = endColor.z
 
         }
+
+        if(screenY%200==0) {
+            println(screenY)
+        }
     }
-     self.postMessage(endImage)
+     self.postMessage(JSON.stringify(endImage))
      println("posted message")
    // self.close()
 }

@@ -31,18 +31,15 @@ var raytracerkotlin = function (_, Kotlin) {
     var endColor = Vector_init();
     var endImage = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
     var index = 0;
-    tmp$ = width;
-    for (var screenX = 0; screenX <= tmp$; screenX++) {
-      tmp$_0 = height;
-      for (var screenY = 0; screenY <= tmp$_0; screenY++) {
-        if (screenY % 200 === 0) {
-          println(screenY);
-        }
+    tmp$ = height;
+    for (var screenY = 0; screenY <= tmp$; screenY++) {
+      tmp$_0 = width;
+      for (var screenX = 0; screenX <= tmp$_0; screenX++) {
         var x = screenX * 6.0 / width - 3.0;
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
         var s = new Vector(0.0, 0.0, 7.0);
-        var numRays = 10;
+        var numRays = 2;
         for (var i = 0; i <= numRays; i++) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
@@ -52,8 +49,11 @@ var raytracerkotlin = function (_, Kotlin) {
         endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
         endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
       }
+      if (screenY % 200 === 0) {
+        println(screenY);
+      }
     }
-    self.postMessage(endImage);
+    self.postMessage(JSON.stringify(endImage));
     println('posted message');
   }
   function shootRay(start, direction) {

@@ -5,6 +5,7 @@ import org.w3c.dom.Worker
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.math.round
+import kotlin.random.Random
 import kotlin.reflect.typeOf
 
 val width = 500
@@ -31,8 +32,9 @@ fun main() {
 
             val imageString = (event.data as String)
             val imageList = imageString.substring(1,imageString.length-1).split(",")
-
-
+            context.fillStyle = fillStyle(150,50,50)
+            context.fillRect(Random.nextDouble(450.0), Random.nextDouble(250.0),20.0,20.0)
+/*
             var index = 0
             for(y in 0..height) {
                 for(x in 0..width) {
@@ -40,7 +42,7 @@ fun main() {
                     context.fillRect(x.toDouble(), y.toDouble(),1.0,1.0)
                     index+=3
                 }
-            }
+            }*/
             println("rendered")
             worker.postMessage("start")
 

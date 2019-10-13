@@ -5,7 +5,7 @@ var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
   var split = Kotlin.kotlin.text.split_ip8yn$;
-  var toDouble = Kotlin.kotlin.text.toDouble_pdl1vz$;
+  var Random = Kotlin.kotlin.random.Random;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
@@ -17,21 +17,13 @@ var render = function (_, Kotlin) {
   function main$lambda(closure$worker) {
     return function (e) {
       var closure$worker_0 = closure$worker;
-      var tmp$, tmp$_0, tmp$_1, tmp$_2;
+      var tmp$, tmp$_0;
       var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
       var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
       var endIndex = imageString.length - 1 | 0;
       var imageList = split(imageString.substring(1, endIndex), [',']);
-      var index = 0;
-      tmp$_1 = height;
-      for (var y = 0; y <= tmp$_1; y++) {
-        tmp$_2 = width;
-        for (var x = 0; x <= tmp$_2; x++) {
-          context.fillStyle = fillStyle(toDouble(imageList.get_za3lpa$(index)), toDouble(imageList.get_za3lpa$(index + 1 | 0)), toDouble(imageList.get_za3lpa$(index + 2 | 0)));
-          context.fillRect(x, y, 1.0, 1.0);
-          index = index + 3 | 0;
-        }
-      }
+      context.fillStyle = fillStyle_0(150, 50, 50);
+      context.fillRect(Random.Default.nextDouble_14dthe$(450.0), Random.Default.nextDouble_14dthe$(250.0), 20.0, 20.0);
       println('rendered');
       closure$worker_0.postMessage('start');
       return Unit;

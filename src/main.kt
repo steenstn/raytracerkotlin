@@ -40,9 +40,7 @@ val spheres = listOf(
      var endImage = arrayListOf<Double>()
      var index = 0
      while(true){
-         if(wait) {
-             continue
-         }
+
      for (screenY in 0..height) {
 
          for (screenX in 0..width) {
@@ -72,7 +70,6 @@ val spheres = listOf(
      self.postMessage(JSON.stringify(endImage))
 
      println("posted message")
-         wait = true
  }
      // self.close()
 }

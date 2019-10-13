@@ -42,9 +42,6 @@ var raytracerkotlin = function (_, Kotlin) {
     var endImage = ArrayList_init();
     var index = 0;
     while (true) {
-      if (wait.v) {
-        continue;
-      }
       tmp$ = height;
       for (var screenY = 0; screenY <= tmp$; screenY++) {
         tmp$_0 = width;
@@ -68,7 +65,6 @@ var raytracerkotlin = function (_, Kotlin) {
       }
       self.postMessage(JSON.stringify(endImage));
       println('posted message');
-      wait.v = true;
     }
   }
   function shootRay(start, direction) {

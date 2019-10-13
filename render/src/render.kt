@@ -42,6 +42,7 @@ fun main() {
                 }
             }
             println("rendered")
+            worker.postMessage("start")
 
         }
     })

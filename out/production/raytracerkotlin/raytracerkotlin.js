@@ -6,6 +6,7 @@ var raytracerkotlin = function (_, Kotlin) {
   'use strict';
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var Unit = Kotlin.kotlin.Unit;
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -24,15 +25,26 @@ var raytracerkotlin = function (_, Kotlin) {
   var width;
   var height;
   var spheres;
+  function main$lambda(closure$wait) {
+    return function (e) {
+      closure$wait.v = false;
+      return Unit;
+    };
+  }
   function main() {
     var tmp$, tmp$_0;
     println('Started webworker');
+    var wait = {v: false};
+    self.addEventListener('message', main$lambda(wait));
     var xmax = 5;
     var ymax = 5;
     var endColor = Vector_init();
     var endImage = ArrayList_init();
     var index = 0;
     while (true) {
+      if (wait.v) {
+        continue;
+      }
       tmp$ = height;
       for (var screenY = 0; screenY <= tmp$; screenY++) {
         tmp$_0 = width;
@@ -56,6 +68,7 @@ var raytracerkotlin = function (_, Kotlin) {
       }
       self.postMessage(JSON.stringify(endImage));
       println('posted message');
+      wait.v = true;
     }
   }
   function shootRay(start, direction) {

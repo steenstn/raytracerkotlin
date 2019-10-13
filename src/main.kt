@@ -31,7 +31,8 @@ val spheres = listOf(
 
      //  canvas.width = width
      //  canvas.height = height
-
+     var wait = false
+    self.addEventListener("message", {e -> wait = false})
 
      val xmax = 5
      val ymax = 5
@@ -39,6 +40,9 @@ val spheres = listOf(
      var endImage = arrayListOf<Double>()
      var index = 0
      while(true){
+         if(wait) {
+             continue
+         }
      for (screenY in 0..height) {
 
          for (screenX in 0..width) {
@@ -68,6 +72,7 @@ val spheres = listOf(
      self.postMessage(JSON.stringify(endImage))
 
      println("posted message")
+         wait = true
  }
      // self.close()
 }

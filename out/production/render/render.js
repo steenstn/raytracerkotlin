@@ -14,30 +14,34 @@ var render = function (_, Kotlin) {
   var height;
   var canvas;
   var context;
-  function main$lambda(e) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2;
-    var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
-    var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
-    var endIndex = imageString.length - 1 | 0;
-    var imageList = split(imageString.substring(1, endIndex), [',']);
-    var index = 0;
-    tmp$_1 = height;
-    for (var y = 0; y <= tmp$_1; y++) {
-      tmp$_2 = width;
-      for (var x = 0; x <= tmp$_2; x++) {
-        context.fillStyle = fillStyle(toDouble(imageList.get_za3lpa$(index)), toDouble(imageList.get_za3lpa$(index + 1 | 0)), toDouble(imageList.get_za3lpa$(index + 2 | 0)));
-        context.fillRect(x, y, 1.0, 1.0);
-        index = index + 3 | 0;
+  function main$lambda(closure$worker) {
+    return function (e) {
+      var closure$worker_0 = closure$worker;
+      var tmp$, tmp$_0, tmp$_1, tmp$_2;
+      var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
+      var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
+      var endIndex = imageString.length - 1 | 0;
+      var imageList = split(imageString.substring(1, endIndex), [',']);
+      var index = 0;
+      tmp$_1 = height;
+      for (var y = 0; y <= tmp$_1; y++) {
+        tmp$_2 = width;
+        for (var x = 0; x <= tmp$_2; x++) {
+          context.fillStyle = fillStyle(toDouble(imageList.get_za3lpa$(index)), toDouble(imageList.get_za3lpa$(index + 1 | 0)), toDouble(imageList.get_za3lpa$(index + 2 | 0)));
+          context.fillRect(x, y, 1.0, 1.0);
+          index = index + 3 | 0;
+        }
       }
-    }
-    println('rendered');
-    return Unit;
+      println('rendered');
+      closure$worker_0.postMessage('start');
+      return Unit;
+    };
   }
   function main() {
     canvas.width = width;
     canvas.height = height;
     var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-    worker.addEventListener('message', main$lambda);
+    worker.addEventListener('message', main$lambda(worker));
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));

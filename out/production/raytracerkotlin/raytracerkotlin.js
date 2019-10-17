@@ -39,9 +39,10 @@ var raytracerkotlin = function (_, Kotlin) {
     var endIndex = imageString.length - 1 | 0;
     var imageList = split(imageString.substring(1, endIndex), [',']);
     var imageListDouble = ArrayList_init();
-    tmp$_1 = imageList.size;
-    for (var i = 0; i <= tmp$_1; i++) {
-      imageListDouble.add_11rb$(toDouble(imageList.get_za3lpa$(i)));
+    tmp$_1 = imageList.iterator();
+    while (tmp$_1.hasNext()) {
+      var element = tmp$_1.next();
+      imageListDouble.add_11rb$(toDouble(element));
     }
     raytrace(imageListDouble);
     return Unit;

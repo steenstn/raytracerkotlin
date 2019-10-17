@@ -25,7 +25,6 @@ fun main() {
         blackImage.add(0.0)
     }
     var worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
-    worker.postMessage(JSON.stringify(blackImage))
     worker.addEventListener("message", {e ->
         run {
             val event = e as MessageEvent
@@ -50,6 +49,8 @@ fun main() {
             worker.postMessage(imageString)
         }
     })
+
+    worker.postMessage(JSON.stringify(blackImage))
 
 }
 

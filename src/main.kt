@@ -41,8 +41,8 @@ var endImage = arrayListOf<Double>()
          val imageString = (event.data as String)
          val imageList = imageString.substring(1,imageString.length-1).split(",")
          val imageListDouble = arrayListOf<Double>()
-         for(i in 0..imageList.size) {
-             imageListDouble.add(imageList[i].toDouble())
+         for(element in imageList) {
+             imageListDouble.add(element.toDouble())
          }
          raytrace(imageListDouble)
      })

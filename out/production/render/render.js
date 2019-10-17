@@ -49,8 +49,8 @@ var render = function (_, Kotlin) {
       blackImage.add_11rb$(0.0);
     }
     var worker = {v: new Worker('out/production/raytracerkotlin/raytracerkotlin.js')};
-    worker.v.postMessage(JSON.stringify(blackImage));
     worker.v.addEventListener('message', main$lambda(worker));
+    worker.v.postMessage(JSON.stringify(blackImage));
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));

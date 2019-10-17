@@ -24,7 +24,14 @@ fun main() {
     for(i in 0..width*height*3) {
         blackImage.add(0.0)
     }
+
+    window.setTimeout({render(blackImage)}, 1)
+
+}
+
+fun render(image : List<Double>) {
     var worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
+    worker.postMessage(JSON.stringify(image))
     worker.addEventListener("message", {e ->
         run {
             val event = e as MessageEvent
@@ -35,7 +42,7 @@ fun main() {
             println("image from event in main thread")
             println(imageString)
             val imageList = imageString.substring(1,imageString.length-1).split(",")
-
+            val doubleList = imageList.map { s -> s.toDouble() }
             //context.fillStyle = fillStyle(50+Random.nextInt(150),50+Random.nextInt(150),50+Random.nextInt(150))
             //context.fillRect(Random.nextDouble(450.0), Random.nextDouble(250.0),20.0,20.0)
 
@@ -48,13 +55,9 @@ fun main() {
                 }
             }
             println("rendered")
-            worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
-            worker.postMessage(imageString)
+            window.setTimeout({render(doubleList)}, 10)
         }
     })
-
-    worker.postMessage(JSON.stringify(blackImage))
-
 }
 
 

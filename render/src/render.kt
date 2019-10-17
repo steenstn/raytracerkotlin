@@ -20,14 +20,9 @@ val context = canvas.getContext("2d") as CanvasRenderingContext2D
 fun main() {
     canvas.width = width
     canvas.height = height
-    render()
-}
-
-fun render() {
-
-
+    val blackImage = DoubleArray(width*height*3) { i -> 0.0 }
     var worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
-
+    worker.postMessage(blackImage)
     worker.addEventListener("message", {e ->
         run {
             val event = e as MessageEvent
@@ -48,11 +43,14 @@ fun render() {
                 }
             }
             println("rendered")
-
-            window.setTimeout({render()}, 500)
+            worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
+            worker.postMessage(imageString)
         }
     })
+
 }
+
+
 
 fun fillStyle(r: Double, g: Double, b: Double) : String {
     return fillStyle(round(r*255).toInt(), round(g*255).toInt(), round(b*255).toInt())

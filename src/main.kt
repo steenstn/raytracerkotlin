@@ -68,9 +68,9 @@ fun raytrace(image: List<Double>) {
             }
 
             endColor /= numRays.toDouble()
-            newImage.add (endColor.x + image[index])
-            newImage.add(endColor.y + image[index])
-            newImage.add(endColor.z + image[index])
+            newImage.add (endColor.x)// + image[index])
+            newImage.add(endColor.y)// + image[index])
+            newImage.add(endColor.z)// + image[index])
 index+=1
 
         }

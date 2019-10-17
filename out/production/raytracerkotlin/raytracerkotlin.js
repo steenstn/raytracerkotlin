@@ -70,9 +70,9 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        newImage.add_11rb$(endColor.x + image.get_za3lpa$(index));
-        newImage.add_11rb$(endColor.y + image.get_za3lpa$(index));
-        newImage.add_11rb$(endColor.z + image.get_za3lpa$(index));
+        newImage.add_11rb$(endColor.x);
+        newImage.add_11rb$(endColor.y);
+        newImage.add_11rb$(endColor.z);
         index = index + 1 | 0;
       }
       if (screenY % 200 === 0) {

@@ -36,7 +36,7 @@ fun render() {
 
             val imageString = (event.data as String)
             val imageList = imageString.substring(1,imageString.length-1).split(",")
-            context.fillStyle = fillStyle(150,50,50)
+            context.fillStyle = fillStyle(50+Random.nextInt(150),50+Random.nextInt(150),50+Random.nextInt(150))
             context.fillRect(Random.nextDouble(450.0), Random.nextDouble(250.0),20.0,20.0)
 /*
             var index = 0

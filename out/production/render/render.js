@@ -29,7 +29,7 @@ var render = function (_, Kotlin) {
     var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
     var endIndex = imageString.length - 1 | 0;
     var imageList = split(imageString.substring(1, endIndex), [',']);
-    context.fillStyle = fillStyle_0(150, 50, 50);
+    context.fillStyle = fillStyle_0(50 + Random.Default.nextInt_za3lpa$(150) | 0, 50 + Random.Default.nextInt_za3lpa$(150) | 0, 50 + Random.Default.nextInt_za3lpa$(150) | 0);
     context.fillRect(Random.Default.nextDouble_14dthe$(450.0), Random.Default.nextDouble_14dthe$(250.0), 20.0, 20.0);
     println('rendered');
     window.setTimeout(render$lambda$lambda$lambda, 500);

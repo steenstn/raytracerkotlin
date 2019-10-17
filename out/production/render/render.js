@@ -25,15 +25,15 @@ var render = function (_, Kotlin) {
       context.fillStyle = fillStyle_0(150, 50, 50);
       context.fillRect(Random.Default.nextDouble_14dthe$(450.0), Random.Default.nextDouble_14dthe$(250.0), 20.0, 20.0);
       println('rendered');
-      closure$worker_0.postMessage('start');
+      closure$worker_0.v = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
       return Unit;
     };
   }
   function main() {
     canvas.width = width;
     canvas.height = height;
-    var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-    worker.addEventListener('message', main$lambda(worker));
+    var worker = {v: new Worker('out/production/raytracerkotlin/raytracerkotlin.js')};
+    worker.v.addEventListener('message', main$lambda(worker));
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));

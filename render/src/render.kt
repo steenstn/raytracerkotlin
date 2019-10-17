@@ -22,7 +22,7 @@ fun main() {
     canvas.width = width
     canvas.height = height
 
-    val worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
+    var worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
 
     worker.addEventListener("message", {e ->
         run {
@@ -44,7 +44,8 @@ fun main() {
                 }
             }*/
             println("rendered")
-            worker.postMessage("start")
+            worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
+
 
         }
     })

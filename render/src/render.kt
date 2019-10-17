@@ -44,9 +44,8 @@ fun main() {
                 }
             }*/
             println("rendered")
-            worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
 
-
+            window.setTimeout({main()}, 500)
         }
     })
 

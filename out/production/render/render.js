@@ -14,26 +14,27 @@ var render = function (_, Kotlin) {
   var height;
   var canvas;
   var context;
-  function main$lambda(closure$worker) {
-    return function (e) {
-      var closure$worker_0 = closure$worker;
-      var tmp$, tmp$_0;
-      var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
-      var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
-      var endIndex = imageString.length - 1 | 0;
-      var imageList = split(imageString.substring(1, endIndex), [',']);
-      context.fillStyle = fillStyle_0(150, 50, 50);
-      context.fillRect(Random.Default.nextDouble_14dthe$(450.0), Random.Default.nextDouble_14dthe$(250.0), 20.0, 20.0);
-      println('rendered');
-      closure$worker_0.v = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-      return Unit;
-    };
+  function main$lambda$lambda$lambda() {
+    main();
+    return Unit;
+  }
+  function main$lambda(e) {
+    var tmp$, tmp$_0;
+    var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
+    var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
+    var endIndex = imageString.length - 1 | 0;
+    var imageList = split(imageString.substring(1, endIndex), [',']);
+    context.fillStyle = fillStyle_0(150, 50, 50);
+    context.fillRect(Random.Default.nextDouble_14dthe$(450.0), Random.Default.nextDouble_14dthe$(250.0), 20.0, 20.0);
+    println('rendered');
+    window.setTimeout(main$lambda$lambda$lambda, 500);
+    return Unit;
   }
   function main() {
     canvas.width = width;
     canvas.height = height;
-    var worker = {v: new Worker('out/production/raytracerkotlin/raytracerkotlin.js')};
-    worker.v.addEventListener('message', main$lambda(worker));
+    var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
+    worker.addEventListener('message', main$lambda);
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));

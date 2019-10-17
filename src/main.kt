@@ -79,7 +79,7 @@ index+=1
             println(screenY)
         }
     }
-    self.postMessage(JSON.stringify(endImage))
+    self.postMessage(JSON.stringify(newImage))
 
     println("posted message")
 

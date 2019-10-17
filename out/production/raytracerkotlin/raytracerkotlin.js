@@ -79,7 +79,7 @@ var raytracerkotlin = function (_, Kotlin) {
         println(screenY);
       }
     }
-    self.postMessage(JSON.stringify(endImage));
+    self.postMessage(JSON.stringify(newImage));
     println('posted message');
     self.close();
   }

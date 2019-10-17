@@ -6,11 +6,15 @@ var raytracerkotlin = function (_, Kotlin) {
   'use strict';
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var throwCCE = Kotlin.throwCCE;
+  var split = Kotlin.kotlin.text.split_ip8yn$;
+  var toDouble = Kotlin.kotlin.text.toDouble_pdl1vz$;
+  var Unit = Kotlin.kotlin.Unit;
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
-  var Math_0 = Math;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
+  var Math_0 = Math;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
@@ -28,10 +32,28 @@ var raytracerkotlin = function (_, Kotlin) {
   var ymax;
   var endColor;
   var endImage;
-  var index;
+  function main$lambda(it) {
+    var tmp$, tmp$_0, tmp$_1;
+    var event = Kotlin.isType(tmp$ = it, MessageEvent) ? tmp$ : throwCCE();
+    var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
+    var endIndex = imageString.length - 1 | 0;
+    var imageList = split(imageString.substring(1, endIndex), [',']);
+    var imageListDouble = ArrayList_init();
+    tmp$_1 = imageList.size;
+    for (var i = 0; i <= tmp$_1; i++) {
+      imageListDouble.add_11rb$(toDouble(imageList.get_za3lpa$(i)));
+    }
+    raytrace(imageListDouble);
+    return Unit;
+  }
   function main() {
-    var tmp$, tmp$_0;
     println('Started webworker');
+    self.addEventListener('message', main$lambda);
+  }
+  function raytrace(image) {
+    var tmp$, tmp$_0;
+    var newImage = ArrayList_init();
+    var index = 0;
     tmp$ = height;
     for (var screenY = 0; screenY <= tmp$; screenY++) {
       tmp$_0 = width;
@@ -45,9 +67,10 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        endImage.add_11rb$(endColor.x);
-        endImage.add_11rb$(endColor.y);
-        endImage.add_11rb$(endColor.z);
+        newImage.add_11rb$(endColor.x + image.get_za3lpa$(index));
+        newImage.add_11rb$(endColor.y + image.get_za3lpa$(index + 1 | 0));
+        newImage.add_11rb$(endColor.z + image.get_za3lpa$(index + 3 | 0));
+        index = index + 3 | 0;
       }
       if (screenY % 200 === 0) {
         println(screenY);
@@ -55,6 +78,7 @@ var raytracerkotlin = function (_, Kotlin) {
     }
     self.postMessage(JSON.stringify(endImage));
     println('posted message');
+    self.close();
   }
   function shootRay(start, direction) {
     var tmp$, tmp$_0;
@@ -318,15 +342,8 @@ var raytracerkotlin = function (_, Kotlin) {
       endImage = value;
     }
   });
-  Object.defineProperty(_, 'index', {
-    get: function () {
-      return index;
-    },
-    set: function (value) {
-      index = value;
-    }
-  });
   _.main = main;
+  _.raytrace_d3e2cz$ = raytrace;
   _.shootRay_nmolro$ = shootRay;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
@@ -355,7 +372,6 @@ var raytracerkotlin = function (_, Kotlin) {
   ymax = 5;
   endColor = Vector_init();
   endImage = ArrayList_init();
-  index = 0;
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

@@ -1,4 +1,5 @@
 import org.w3c.dom.DedicatedWorkerGlobalScope
+import org.w3c.dom.MessageEvent
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.math.cos
@@ -31,43 +32,57 @@ val xmax = 5
 val ymax = 5
 var endColor = Vector()
 var endImage = arrayListOf<Double>()
-var index = 0
 
  fun main() {
      println("Started webworker")
 
-     for (screenY in 0..height) {
-
-         for (screenX in 0..width) {
-             val x = (screenX * 6.0) / width - 3.0
-             val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
-             val dir = Vector(x / xmax, y / ymax, -1.0).normalize()
-
-             val s = Vector(0.0, 0.0, 7.0)
-
-             val numRays = 10
-             for (i in 0..numRays) {
-                 endColor += shootRay(s, dir)
-             }
-
-             endColor /= numRays.toDouble()
-             endImage.add(endColor.x)
-             endImage.add(endColor.y)
-             endImage.add(endColor.z)
-
-
+     self.addEventListener("message",  {
+         val event = it as MessageEvent
+         val imageString = (event.data as String)
+         val imageList = imageString.substring(1,imageString.length-1).split(",")
+         val imageListDouble = arrayListOf<Double>()
+         for(i in 0..imageList.size) {
+             imageListDouble.add(imageList[i].toDouble())
          }
+         raytrace(imageListDouble)
+     })
+}
 
-         if (screenY % 200 == 0) {
-             println(screenY)
-         }
-     }
-     self.postMessage(JSON.stringify(endImage))
+fun raytrace(image: List<Double>) {
+    var newImage = arrayListOf<Double>()
+    var index = 0
+    for (screenY in 0..height) {
 
-     println("posted message")
+        for (screenX in 0..width) {
+            val x = (screenX * 6.0) / width - 3.0
+            val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
+            val dir = Vector(x / xmax, y / ymax, -1.0).normalize()
+
+            val s = Vector(0.0, 0.0, 7.0)
+
+            val numRays = 10
+            for (i in 0..numRays) {
+                endColor += shootRay(s, dir)
+            }
+
+            endColor /= numRays.toDouble()
+            newImage.add (endColor.x + image[index])
+            newImage.add(endColor.y + image[index+1])
+            newImage.add(endColor.z + image[index+3])
+index+=3
+
+        }
+
+        if (screenY % 200 == 0) {
+            println(screenY)
+        }
+    }
+    self.postMessage(JSON.stringify(endImage))
+
+    println("posted message")
 
 
-     // self.close()
+    self.close()
 }
 
  fun shootRay(start : Vector, direction : Vector) : Vector {

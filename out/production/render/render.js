@@ -10,6 +10,7 @@ var render = function (_, Kotlin) {
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var width;
   var height;
   var canvas;
@@ -39,15 +40,14 @@ var render = function (_, Kotlin) {
     };
   }
   function main() {
+    var tmp$;
     canvas.width = width;
     canvas.height = height;
-    var array = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
-    var tmp$;
-    tmp$ = array.length - 1 | 0;
+    var blackImage = ArrayList_init();
+    tmp$ = Kotlin.imul(width, height) * 3 | 0;
     for (var i = 0; i <= tmp$; i++) {
-      array[i] = 0.0;
+      blackImage.add_11rb$(0.0);
     }
-    var blackImage = array;
     var worker = {v: new Worker('out/production/raytracerkotlin/raytracerkotlin.js')};
     worker.v.postMessage(JSON.stringify(blackImage));
     worker.v.addEventListener('message', main$lambda(worker));

@@ -14,11 +14,16 @@ var render = function (_, Kotlin) {
   var height;
   var canvas;
   var context;
-  function main$lambda$lambda$lambda() {
-    main();
+  function main() {
+    canvas.width = width;
+    canvas.height = height;
+    render();
+  }
+  function render$lambda$lambda$lambda() {
+    render();
     return Unit;
   }
-  function main$lambda(e) {
+  function render$lambda(e) {
     var tmp$, tmp$_0;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
     var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
@@ -27,14 +32,12 @@ var render = function (_, Kotlin) {
     context.fillStyle = fillStyle_0(150, 50, 50);
     context.fillRect(Random.Default.nextDouble_14dthe$(450.0), Random.Default.nextDouble_14dthe$(250.0), 20.0, 20.0);
     println('rendered');
-    window.setTimeout(main$lambda$lambda$lambda, 500);
+    window.setTimeout(render$lambda$lambda$lambda, 500);
     return Unit;
   }
-  function main() {
-    canvas.width = width;
-    canvas.height = height;
+  function render() {
     var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-    worker.addEventListener('message', main$lambda);
+    worker.addEventListener('message', render$lambda);
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));
@@ -63,6 +66,7 @@ var render = function (_, Kotlin) {
     }
   });
   _.main = main;
+  _.render = render;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
   width = 500;

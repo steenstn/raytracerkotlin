@@ -18,9 +18,13 @@ val canvas = document.getElementById("c") as HTMLCanvasElement
 val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
 fun main() {
-
     canvas.width = width
     canvas.height = height
+    render()
+}
+
+fun render() {
+
 
     var worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
 
@@ -45,10 +49,9 @@ fun main() {
             }*/
             println("rendered")
 
-            window.setTimeout({main()}, 500)
+            window.setTimeout({render()}, 500)
         }
     })
-
 }
 
 fun fillStyle(r: Double, g: Double, b: Double) : String {

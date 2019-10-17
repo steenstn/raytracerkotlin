@@ -36,9 +36,9 @@ fun render() {
 
             val imageString = (event.data as String)
             val imageList = imageString.substring(1,imageString.length-1).split(",")
-            context.fillStyle = fillStyle(50+Random.nextInt(150),50+Random.nextInt(150),50+Random.nextInt(150))
-            context.fillRect(Random.nextDouble(450.0), Random.nextDouble(250.0),20.0,20.0)
-/*
+            //context.fillStyle = fillStyle(50+Random.nextInt(150),50+Random.nextInt(150),50+Random.nextInt(150))
+            //context.fillRect(Random.nextDouble(450.0), Random.nextDouble(250.0),20.0,20.0)
+
             var index = 0
             for(y in 0..height) {
                 for(x in 0..width) {
@@ -46,7 +46,7 @@ fun render() {
                     context.fillRect(x.toDouble(), y.toDouble(),1.0,1.0)
                     index+=3
                 }
-            }*/
+            }
             println("rendered")
 
             window.setTimeout({render()}, 500)

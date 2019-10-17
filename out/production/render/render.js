@@ -49,7 +49,7 @@ var render = function (_, Kotlin) {
     }
     var blackImage = array;
     var worker = {v: new Worker('out/production/raytracerkotlin/raytracerkotlin.js')};
-    worker.v.postMessage(blackImage);
+    worker.v.postMessage(JSON.stringify(blackImage));
     worker.v.addEventListener('message', main$lambda(worker));
   }
   function fillStyle(r, g, b) {

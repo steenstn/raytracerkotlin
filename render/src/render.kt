@@ -20,9 +20,9 @@ val context = canvas.getContext("2d") as CanvasRenderingContext2D
 fun main() {
     canvas.width = width
     canvas.height = height
-    val blackImage = DoubleArray(width*height*3) { i -> 0.0 }
+    val blackImage = DoubleArray(width*height*3) { 0.0 }
     var worker = Worker("out/production/raytracerkotlin/raytracerkotlin.js")
-    worker.postMessage(blackImage)
+    worker.postMessage(JSON.stringify(blackImage))
     worker.addEventListener("message", {e ->
         run {
             val event = e as MessageEvent

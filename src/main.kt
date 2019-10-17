@@ -44,6 +44,8 @@ var endImage = arrayListOf<Double>()
          for(element in imageList) {
              imageListDouble.add(element.toDouble())
          }
+         println("image in webworker")
+         println(imageListDouble)
          raytrace(imageListDouble)
      })
 }

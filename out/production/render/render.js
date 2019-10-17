@@ -4,9 +4,9 @@ if (typeof kotlin === 'undefined') {
 var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var split = Kotlin.kotlin.text.split_ip8yn$;
   var toDouble = Kotlin.kotlin.text.toDouble_pdl1vz$;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -21,6 +21,8 @@ var render = function (_, Kotlin) {
       var tmp$, tmp$_0, tmp$_1, tmp$_2;
       var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
       var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
+      println('image from event in main thread');
+      println(imageString);
       var endIndex = imageString.length - 1 | 0;
       var imageList = split(imageString.substring(1, endIndex), [',']);
       var index = 0;

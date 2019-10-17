@@ -32,7 +32,10 @@ fun main() {
             //println(jsTypeOf(event.data))
 
             val imageString = (event.data as String)
+            println("image from event in main thread")
+            println(imageString)
             val imageList = imageString.substring(1,imageString.length-1).split(",")
+
             //context.fillStyle = fillStyle(50+Random.nextInt(150),50+Random.nextInt(150),50+Random.nextInt(150))
             //context.fillRect(Random.nextDouble(450.0), Random.nextDouble(250.0),20.0,20.0)
 

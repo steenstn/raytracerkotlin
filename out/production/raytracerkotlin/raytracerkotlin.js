@@ -44,6 +44,8 @@ var raytracerkotlin = function (_, Kotlin) {
       var element = tmp$_1.next();
       imageListDouble.add_11rb$(toDouble(element));
     }
+    println('image in webworker');
+    println(imageListDouble);
     raytrace(imageListDouble);
     return Unit;
   }

@@ -10,8 +10,8 @@ var raytracerkotlin = function (_, Kotlin) {
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Math_0 = Math;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
@@ -25,47 +25,43 @@ var raytracerkotlin = function (_, Kotlin) {
   var width;
   var height;
   var spheres;
-  function main$lambda(closure$wait) {
-    return function (e) {
-      closure$wait.v = false;
-      return Unit;
-    };
+  var xmax;
+  var ymax;
+  var endColor;
+  var endImage;
+  var index;
+  function main$lambda() {
+    main();
+    return Unit;
   }
   function main() {
     var tmp$, tmp$_0;
     println('Started webworker');
-    var wait = {v: false};
-    self.addEventListener('message', main$lambda(wait));
-    var xmax = 5;
-    var ymax = 5;
-    var endColor = Vector_init();
-    var endImage = ArrayList_init();
-    var index = 0;
-    while (true) {
-      tmp$ = height;
-      for (var screenY = 0; screenY <= tmp$; screenY++) {
-        tmp$_0 = width;
-        for (var screenX = 0; screenX <= tmp$_0; screenX++) {
-          var x = screenX * 6.0 / width - 3.0;
-          var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
-          var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
-          var s = new Vector(0.0, 0.0, 7.0);
-          var numRays = 10;
-          for (var i = 0; i <= numRays; i++) {
-            endColor = endColor.plus_spvnod$(shootRay(s, dir));
-          }
-          endColor = endColor.div_14dthe$(numRays);
-          endImage.add_11rb$(endColor.x);
-          endImage.add_11rb$(endColor.y);
-          endImage.add_11rb$(endColor.z);
+    tmp$ = height;
+    for (var screenY = 0; screenY <= tmp$; screenY++) {
+      tmp$_0 = width;
+      for (var screenX = 0; screenX <= tmp$_0; screenX++) {
+        var x = screenX * 6.0 / width - 3.0;
+        var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
+        var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
+        var s = new Vector(0.0, 0.0, 7.0);
+        var numRays = 10;
+        for (var i = 0; i <= numRays; i++) {
+          endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
-        if (screenY % 200 === 0) {
-          println(screenY);
-        }
+        endColor = endColor.div_14dthe$(numRays);
+        endImage.add_11rb$(endColor.x);
+        endImage.add_11rb$(endColor.y);
+        endImage.add_11rb$(endColor.z);
       }
-      self.postMessage(JSON.stringify(endImage));
-      println('posted message');
+      if (screenY % 200 === 0) {
+        println(screenY);
+      }
     }
+    self.postMessage(JSON.stringify(endImage));
+    println('posted message');
+    window.setTimeout(main$lambda, 1000);
+    return;
   }
   function shootRay(start, direction) {
     var tmp$, tmp$_0;
@@ -303,6 +299,40 @@ var raytracerkotlin = function (_, Kotlin) {
       return spheres;
     }
   });
+  Object.defineProperty(_, 'xmax', {
+    get: function () {
+      return xmax;
+    }
+  });
+  Object.defineProperty(_, 'ymax', {
+    get: function () {
+      return ymax;
+    }
+  });
+  Object.defineProperty(_, 'endColor', {
+    get: function () {
+      return endColor;
+    },
+    set: function (value) {
+      endColor = value;
+    }
+  });
+  Object.defineProperty(_, 'endImage', {
+    get: function () {
+      return endImage;
+    },
+    set: function (value) {
+      endImage = value;
+    }
+  });
+  Object.defineProperty(_, 'index', {
+    get: function () {
+      return index;
+    },
+    set: function (value) {
+      index = value;
+    }
+  });
   _.main = main;
   _.shootRay_nmolro$ = shootRay;
   _.fillStyle_yvo9jy$ = fillStyle;
@@ -328,6 +358,11 @@ var raytracerkotlin = function (_, Kotlin) {
   width = 500;
   height = 300;
   spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(4.0, 4.0, 4.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
+  xmax = 5;
+  ymax = 5;
+  endColor = Vector_init();
+  endImage = ArrayList_init();
+  index = 0;
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

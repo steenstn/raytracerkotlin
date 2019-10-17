@@ -1,4 +1,6 @@
 import org.w3c.dom.DedicatedWorkerGlobalScope
+import kotlin.browser.document
+import kotlin.browser.window
 import kotlin.math.cos
 import kotlin.math.round
 import kotlin.math.sin
@@ -25,21 +27,14 @@ val spheres = listOf(
 
 //val canvas = document.getElementById("c") as HTMLCanvasElement
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
+val xmax = 5
+val ymax = 5
+var endColor = Vector()
+var endImage = arrayListOf<Double>()
+var index = 0
 
  fun main() {
      println("Started webworker")
-
-     //  canvas.width = width
-     //  canvas.height = height
-     var wait = false
-    self.addEventListener("message", {e -> wait = false})
-
-     val xmax = 5
-     val ymax = 5
-     var endColor = Vector()
-     var endImage = arrayListOf<Double>()
-     var index = 0
-     while(true){
 
      for (screenY in 0..height) {
 
@@ -70,7 +65,10 @@ val spheres = listOf(
      self.postMessage(JSON.stringify(endImage))
 
      println("posted message")
- }
+
+
+     window.setTimeout({main()}, 1000)
+     return
      // self.close()
 }
 

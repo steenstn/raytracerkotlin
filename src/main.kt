@@ -67,8 +67,6 @@ var index = 0
      println("posted message")
 
 
-     window.setTimeout({main()}, 1000)
-     return
      // self.close()
 }
 

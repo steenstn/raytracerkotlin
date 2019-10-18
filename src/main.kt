@@ -63,7 +63,9 @@ fun raytrace(image: List<Double>) {
             val s = Vector(0.0, 0.0, 7.0)
 
             val numRays = 10
-            endColor = Vector(image[index], image[index+1], image[index+2])
+            if(index+3 < image.size) {
+                endColor = Vector(image[index], image[index + 1], image[index + 2])
+            }
             for (i in 0..numRays) {
                 endColor += shootRay(s, dir)
             }

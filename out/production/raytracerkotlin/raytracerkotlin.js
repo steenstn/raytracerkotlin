@@ -66,6 +66,7 @@ var raytracerkotlin = function (_, Kotlin) {
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
         var s = new Vector(0.0, 0.0, 7.0);
         var numRays = 10;
+        endColor = new Vector(image.get_za3lpa$(index), image.get_za3lpa$(index + 1 | 0), image.get_za3lpa$(index + 2 | 0));
         for (var i = 0; i <= numRays; i++) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
@@ -73,7 +74,7 @@ var raytracerkotlin = function (_, Kotlin) {
         newImage.add_11rb$(endColor.x);
         newImage.add_11rb$(endColor.y);
         newImage.add_11rb$(endColor.z);
-        index = index + 1 | 0;
+        index = index + 3 | 0;
       }
       if (screenY % 200 === 0) {
         println(screenY);

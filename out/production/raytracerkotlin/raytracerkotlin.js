@@ -1,4 +1,3 @@
-importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
 if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
@@ -11,6 +10,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var Math_0 = Math;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
@@ -34,7 +34,12 @@ var raytracerkotlin = function (_, Kotlin) {
     return Unit;
   }
   function main() {
+    var tmp$;
     println('Started webworker');
+    tmp$ = Kotlin.imul(width, height) * 3 | 0;
+    for (var i = 0; i <= tmp$; i++) {
+      endImage.add_11rb$(0.0);
+    }
     self.addEventListener('message', main$lambda);
   }
   function raytrace() {
@@ -53,9 +58,9 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        endImage[tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1] = endColor.x;
-        endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
-        endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
+        endImage.set_wxm5ur$((tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1), endColor.x);
+        endImage.set_wxm5ur$((tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2), endColor.y);
+        endImage.set_wxm5ur$((tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3), endColor.z);
       }
       if (screenY % 200 === 0) {
         println(screenY);
@@ -363,13 +368,7 @@ var raytracerkotlin = function (_, Kotlin) {
   xmax = 5;
   ymax = 5;
   endColor = Vector_init();
-  var array = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
-  var tmp$;
-  tmp$ = array.length - 1 | 0;
-  for (var i = 0; i <= tmp$; i++) {
-    array[i] = 0.0;
-  }
-  endImage = array;
+  endImage = ArrayList_init();
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

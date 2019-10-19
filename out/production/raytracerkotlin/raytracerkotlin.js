@@ -59,7 +59,7 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        endImage.set_wxm5ur$(index, endColor.x);
+        endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x);
         endImage.set_wxm5ur$(index + 1 | 0, endColor.y);
         endImage.set_wxm5ur$(index + 2 | 0, endColor.z);
         index = index + 3 | 0;

@@ -18,6 +18,10 @@ y går neråt
 z går mot skärmen
 
 */
+
+fun clamp(value : Double, min : Double, max : Double) : Double {
+    return if(value > max) max else if (value < min) min else value
+}
 external val self: DedicatedWorkerGlobalScope
 val spheres = listOf(
         Sphere(3.0, -2.0, 0.0, 1.0, Material(Vector(), Vector(40.0,40.0,40.0), Material.Type.LIGHT)),
@@ -75,7 +79,7 @@ fun raytrace() {
             println(screenY)
         }
     }
-    val imageToRender = endImage.map { it/numPasses }
+    val imageToRender = endImage.map { clamp(it/numPasses, 0.0, 1.0) }
     numPasses++
     self.postMessage(JSON.stringify(imageToRender))
 

@@ -7,6 +7,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
+  var ensureNotNull = Kotlin.ensureNotNull;
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -88,32 +89,59 @@ var raytracerkotlin = function (_, Kotlin) {
     println('posted message');
   }
   function shootRay(start, direction) {
-    var tmp$, tmp$_0;
-    tmp$ = spheres.iterator();
+    var $receiver = spheres;
+    var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
+    var tmp$;
+    tmp$ = $receiver.iterator();
     while (tmp$.hasNext()) {
-      var sphere = tmp$.next();
-      if ((tmp$_0 = sphere.getIntersection_nmolro$(start, direction)) != null) {
-        if (tmp$_0.material.type === Material$Type$LIGHT_getInstance()) {
-          return tmp$_0.material.emittance;
-        }
-         else {
-          var randomVector = Vector$Companion_getInstance().random();
-          var crossed = randomVector.cross_spvnod$(tmp$_0.normal).normalize();
-          var eps1 = Random.Default.nextDouble() * 3.14159 * 2.0;
-          var x = Random.Default.nextDouble();
-          var eps2 = Math_0.sqrt(x);
-          var x_0 = Math_0.cos(eps1) * eps2;
-          var y = Math_0.sin(eps1) * eps2;
-          var x_1 = 1.0 - eps2 * eps2;
-          var z = Math_0.sqrt(x_1);
-          var tangent = tmp$_0.normal.cross_spvnod$(crossed);
-          var newDirection = crossed.times_14dthe$(x_0).plus_spvnod$(tangent.times_14dthe$(y)).plus_spvnod$(tmp$_0.normal.times_14dthe$(z));
-          var reflected = shootRay(tmp$_0.position, newDirection);
-          return tmp$_0.material.color.times_spvnod$(reflected);
+      var item = tmp$.next();
+      destination.add_11rb$(item.getIntersection_nmolro$(start, direction));
+    }
+    var intersections = destination;
+    var minBy$result;
+    minBy$break: do {
+      var iterator = intersections.iterator();
+      if (!iterator.hasNext()) {
+        minBy$result = null;
+        break minBy$break;
+      }
+      var minElem = iterator.next();
+      if (!iterator.hasNext()) {
+        minBy$result = minElem;
+        break minBy$break;
+      }
+      var minValue = ensureNotNull(minElem).position.minus_spvnod$(start).length();
+      do {
+        var e = iterator.next();
+        var v = ensureNotNull(e).position.minus_spvnod$(start).length();
+        if (Kotlin.compareTo(minValue, v) > 0) {
+          minElem = e;
+          minValue = v;
         }
       }
+       while (iterator.hasNext());
+      minBy$result = minElem;
     }
-    return new Vector(0.0, 0.0, 0.0);
+     while (false);
+    var closestIntersection = minBy$result;
+    if (ensureNotNull(closestIntersection).material.type === Material$Type$LIGHT_getInstance()) {
+      return closestIntersection.material.emittance;
+    }
+     else {
+      var randomVector = Vector$Companion_getInstance().random();
+      var crossed = randomVector.cross_spvnod$(closestIntersection.normal).normalize();
+      var eps1 = Random.Default.nextDouble() * 3.14159 * 2.0;
+      var x = Random.Default.nextDouble();
+      var eps2 = Math_0.sqrt(x);
+      var x_0 = Math_0.cos(eps1) * eps2;
+      var y = Math_0.sin(eps1) * eps2;
+      var x_1 = 1.0 - eps2 * eps2;
+      var z = Math_0.sqrt(x_1);
+      var tangent = closestIntersection.normal.cross_spvnod$(crossed);
+      var newDirection = crossed.times_14dthe$(x_0).plus_spvnod$(tangent.times_14dthe$(y)).plus_spvnod$(closestIntersection.normal.times_14dthe$(z));
+      var reflected = shootRay(closestIntersection.position, newDirection);
+      return closestIntersection.material.color.times_spvnod$(reflected);
+    }
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));

@@ -89,9 +89,32 @@ fun raytrace() {
 }
 
 
- fun shootRay(start : Vector, direction : Vector) : Vector {
+fun shootRay(start : Vector, direction : Vector) : Vector {
 
-    for(sphere in spheres) {
+    val intersections = spheres.map { it.getIntersection(start, direction) }
+    val closestIntersection = intersections.minBy { (it!!.position-start).length() }
+
+    if(closestIntersection!!.material.type == Material.Type.LIGHT) {
+        return closestIntersection.material.emittance
+    } else {
+        val randomVector = Vector.random()
+        val crossed = randomVector.cross(closestIntersection.normal).normalize()
+        val eps1 = Random.nextDouble()*3.14159*2.0
+        val eps2 = sqrt(Random.nextDouble())
+
+        val x = cos(eps1)*eps2
+        val y = sin(eps1)*eps2
+        val z = sqrt(1.0 - eps2*eps2)
+
+        val tangent = closestIntersection.normal.cross(crossed)
+
+        val newDirection = crossed * x + tangent * y + closestIntersection.normal * z
+        val reflected = shootRay(closestIntersection.position, newDirection)
+        return closestIntersection.material.color * reflected
+    }
+
+    /*for(sphere in spheres) {
+
 
         sphere.getIntersection(start, direction)?.let {
             if(it.material.type == Material.Type.LIGHT) {
@@ -113,7 +136,7 @@ fun raytrace() {
                 return it.material.color * reflected
             }
         }
-    }
+    }*/
     return Vector(0.0,0.0,0.0)
 }
 fun fillStyle(r: Double, g: Double, b: Double) : String {

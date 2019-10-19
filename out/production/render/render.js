@@ -53,9 +53,9 @@ var render = function (_, Kotlin) {
     var doubleList = destination;
     var index = 0;
     tmp$_1 = height;
-    for (var y = 0; y <= tmp$_1; y++) {
+    for (var y = 0; y < tmp$_1; y++) {
       tmp$_2 = width;
-      for (var x = 0; x <= tmp$_2; x++) {
+      for (var x = 0; x < tmp$_2; x++) {
         context.fillStyle = fillStyle(toDouble(imageList.get_za3lpa$(index)), toDouble(imageList.get_za3lpa$(index + 1 | 0)), toDouble(imageList.get_za3lpa$(index + 2 | 0)));
         context.fillRect(x, y, 1.0, 1.0);
         index = index + 3 | 0;

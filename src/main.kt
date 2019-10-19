@@ -36,7 +36,7 @@ var endImage = arrayListOf<Double>()
 
  fun main() {
     println("Started webworker")
-    for(i in 0..width*height*3+1)
+    for(i in 0 until width*height*3)
     {
         endImage.add(0.0)
     }
@@ -48,9 +48,9 @@ var endImage = arrayListOf<Double>()
 
 fun raytrace() {
     var index = 0
-    for (screenY in 0..height) {
+    for (screenY in 0 until height) {
 
-        for (screenX in 0..width) {
+        for (screenX in 0 until width) {
             val x = (screenX * 6.0) / width - 3.0
             val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
             val dir = Vector(x / xmax, y / ymax, -1.0).normalize()

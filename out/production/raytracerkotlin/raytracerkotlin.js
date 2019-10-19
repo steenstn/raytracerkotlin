@@ -37,8 +37,8 @@ var raytracerkotlin = function (_, Kotlin) {
   function main() {
     var tmp$;
     println('Started webworker');
-    tmp$ = (Kotlin.imul(width, height) * 3 | 0) + 1 | 0;
-    for (var i = 0; i <= tmp$; i++) {
+    tmp$ = Kotlin.imul(width, height) * 3 | 0;
+    for (var i = 0; i < tmp$; i++) {
       endImage.add_11rb$(0.0);
     }
     self.addEventListener('message', main$lambda);
@@ -47,9 +47,9 @@ var raytracerkotlin = function (_, Kotlin) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     var index = 0;
     tmp$ = height;
-    for (var screenY = 0; screenY <= tmp$; screenY++) {
+    for (var screenY = 0; screenY < tmp$; screenY++) {
       tmp$_0 = width;
-      for (var screenX = 0; screenX <= tmp$_0; screenX++) {
+      for (var screenX = 0; screenX < tmp$_0; screenX++) {
         var x = screenX * 6.0 / width - 3.0;
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();

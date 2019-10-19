@@ -47,8 +47,8 @@ fun render(e: Event) {
     //context.fillRect(Random.nextDouble(450.0), Random.nextDouble(250.0),20.0,20.0)
 
     var index = 0
-    for(y in 0..height) {
-        for(x in 0..width) {
+    for(y in 0 until height) {
+        for(x in 0 until width) {
             context.fillStyle = fillStyle(imageList[index].toDouble(), imageList[index+1].toDouble(), imageList[index+2].toDouble())
             context.fillRect(x.toDouble(), y.toDouble(),1.0,1.0)
             index+=3

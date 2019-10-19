@@ -8,8 +8,8 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.random.Random
 
-val width = 500
-val height = 300
+val width = 800
+val height = 500
 
 /*
 Vänsterorienterat
@@ -24,14 +24,12 @@ fun clamp(value : Double, min : Double, max : Double) : Double {
 }
 external val self: DedicatedWorkerGlobalScope
 val spheres = listOf(
-        Sphere(3.0, -2.0, 0.0, 1.0, Material(Vector(), Vector(40.0,40.0,40.0), Material.Type.LIGHT)),
-        Sphere(-1.0, 0.0, -1.5, 1.0, Material(Vector(1.0,0.6,0.1),Vector(), Material.Type.DIFFUSE)),
+        Sphere(3.0, -2.0, 0.0, 1.0, Material.light(40.0, 40.0, 40.0)),
+        Sphere(-1.0, 0.0, -2.5, 1.0, Material(Vector(1.0,0.6,0.1),Vector(), Material.Type.SPECULAR)),
         Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0), Vector(), Material.Type.DIFFUSE)),
         Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.5,0.2), Vector(), Material.Type.DIFFUSE))
         )
 
-//val canvas = document.getElementById("c") as HTMLCanvasElement
-//val context = canvas.getContext("2d") as CanvasRenderingContext2D
 val xmax = 5
 val ymax = 5
 val maxBounces = 50
@@ -61,7 +59,7 @@ fun raytrace() {
             val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
             val dir = Vector(x / xmax, y / ymax, -1.0).normalize()
 
-            val s = Vector(0.0, 0.0, 7.0)
+            val s = Vector(0.0, -0.5, 7.0)
 
             val numRays = 100
             for (i in 0 until numRays) {
@@ -96,9 +94,9 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
         return Vector()
     }
     val intersections = spheres.mapNotNull { it.getIntersection(start, direction) }
-    val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return Vector(0.0,0.0,0.0)
+    val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return Vector(0.50,0.50,0.80)
 
-    if(closestIntersection.material.type == Material.Type.LIGHT) {
+    if(closestIntersection.material.types.contains(Material.Type.LIGHT)) {
         return closestIntersection.material.emittance
     } else {
         val randomVector = Vector.random()
@@ -112,7 +110,13 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
 
         val tangent = closestIntersection.normal.cross(crossed)
 
-        val newDirection = crossed * x + tangent * y + closestIntersection.normal * z
+        val newDirection = if(closestIntersection.material.types.contains(Material.Type.SPECULAR) && Random.nextDouble() > 0.4) {
+            direction - closestIntersection.normal * 2.0 * (closestIntersection.normal.dot(direction))
+        }
+        else {
+            crossed * x + tangent * y + closestIntersection.normal * z
+        }
+
         val reflected = shootRay(closestIntersection.position, newDirection)
         return closestIntersection.material.color * reflected
     }

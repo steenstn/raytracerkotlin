@@ -6,9 +6,9 @@ var render = function (_, Kotlin) {
   var throwCCE = Kotlin.throwCCE;
   var ensureNotNull = Kotlin.ensureNotNull;
   var Unit = Kotlin.kotlin.Unit;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var split = Kotlin.kotlin.text.split_ip8yn$;
   var toDouble = Kotlin.kotlin.text.toDouble_pdl1vz$;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
@@ -40,7 +40,6 @@ var render = function (_, Kotlin) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
     var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
-    println('image from event in main thread');
     var endIndex = imageString.length - 1 | 0;
     var imageList = split(imageString.substring(1, endIndex), [',']);
     var destination = ArrayList_init_0(collectionSizeOrDefault(imageList, 10));
@@ -102,8 +101,8 @@ var render = function (_, Kotlin) {
   _.render_9ojx7i$ = render;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
-  width = 500;
-  height = 300;
+  width = 800;
+  height = 500;
   var tmp$, tmp$_0;
   canvas = Kotlin.isType(tmp$ = document.getElementById('c'), HTMLCanvasElement) ? tmp$ : throwCCE();
   context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();

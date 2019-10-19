@@ -9,8 +9,8 @@ import kotlin.math.round
 import kotlin.random.Random
 import kotlin.reflect.typeOf
 
-val width = 500
-val height = 300
+val width = 800
+val height = 500
 /*
 importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
  */

@@ -44,7 +44,7 @@ var raytracerkotlin = function (_, Kotlin) {
     self.addEventListener('message', main$lambda);
   }
   function raytrace() {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9;
+    var tmp$, tmp$_0;
     var index = 0;
     tmp$ = height;
     for (var screenY = 0; screenY < tmp$; screenY++) {
@@ -59,12 +59,10 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        tmp$_2 = (tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1);
-        endImage.set_wxm5ur$((tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3), endImage.get_za3lpa$(tmp$_2) + endColor.x);
-        tmp$_5 = (tmp$_4 = index, index = tmp$_4 + 1 | 0, tmp$_4);
-        endImage.set_wxm5ur$((tmp$_6 = index, index = tmp$_6 + 1 | 0, tmp$_6), endImage.get_za3lpa$(tmp$_5) + endColor.y);
-        tmp$_8 = (tmp$_7 = index, index = tmp$_7 + 1 | 0, tmp$_7);
-        endImage.set_wxm5ur$((tmp$_9 = index, index = tmp$_9 + 1 | 0, tmp$_9), endImage.get_za3lpa$(tmp$_8) + endColor.z);
+        endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x);
+        endImage.set_wxm5ur$(index + 1 | 0, endImage.get_za3lpa$(index + 1 | 0) + endColor.y);
+        endImage.set_wxm5ur$(index + 2 | 0, endImage.get_za3lpa$(index + 2 | 0) + endColor.z);
+        index = index + 3 | 0;
       }
       if (screenY % 200 === 0) {
         println(screenY);

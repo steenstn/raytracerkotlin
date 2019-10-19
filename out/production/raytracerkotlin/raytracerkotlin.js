@@ -10,8 +10,10 @@ var raytracerkotlin = function (_, Kotlin) {
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
+  var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   var Math_0 = Math;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
+  var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
@@ -27,7 +29,6 @@ var raytracerkotlin = function (_, Kotlin) {
   var spheres;
   var xmax;
   var ymax;
-  var endColor;
   var endImage;
   var numPasses;
   function main$lambda(it) {
@@ -51,6 +52,7 @@ var raytracerkotlin = function (_, Kotlin) {
     for (var screenY = 0; screenY < tmp$; screenY++) {
       tmp$_0 = width;
       for (var screenX = 0; screenX < tmp$_0; screenX++) {
+        var endColor = Vector_init();
         var x = screenX * 6.0 / width - 3.0;
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
@@ -60,25 +62,27 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x / numPasses);
-        endImage.set_wxm5ur$(index + 1 | 0, endImage.get_za3lpa$(index + 1 | 0) + endColor.y / numPasses);
-        endImage.set_wxm5ur$(index + 2 | 0, endImage.get_za3lpa$(index + 2 | 0) + endColor.z / numPasses);
+        endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x);
+        endImage.set_wxm5ur$(index + 1 | 0, endImage.get_za3lpa$(index + 1 | 0) + endColor.y);
+        endImage.set_wxm5ur$(index + 2 | 0, endImage.get_za3lpa$(index + 2 | 0) + endColor.z);
         index = index + 3 | 0;
       }
       if (screenY % 200 === 0) {
         println(screenY);
       }
     }
+    var $receiver = endImage;
+    var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
+    var tmp$_1;
+    tmp$_1 = $receiver.iterator();
+    while (tmp$_1.hasNext()) {
+      var item = tmp$_1.next();
+      destination.add_11rb$(item / numPasses);
+    }
+    var imageToRender = destination;
     numPasses = numPasses + 1 | 0;
-    self.postMessage(JSON.stringify(endImage));
+    self.postMessage(JSON.stringify(imageToRender));
     println('posted message');
-  }
-  function wait$lambda() {
-    wait();
-    return Unit;
-  }
-  function wait() {
-    self.setTimeout(wait$lambda, 500);
   }
   function shootRay(start, direction) {
     var tmp$, tmp$_0;
@@ -326,14 +330,6 @@ var raytracerkotlin = function (_, Kotlin) {
       return ymax;
     }
   });
-  Object.defineProperty(_, 'endColor', {
-    get: function () {
-      return endColor;
-    },
-    set: function (value) {
-      endColor = value;
-    }
-  });
   Object.defineProperty(_, 'endImage', {
     get: function () {
       return endImage;
@@ -352,7 +348,6 @@ var raytracerkotlin = function (_, Kotlin) {
   });
   _.main = main;
   _.raytrace = raytrace;
-  _.wait = wait;
   _.shootRay_nmolro$ = shootRay;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
@@ -379,8 +374,7 @@ var raytracerkotlin = function (_, Kotlin) {
   spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(4.0, 4.0, 4.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
   xmax = 5;
   ymax = 5;
-  endColor = Vector_init();
-  endImage = ArrayList_init();
+  endImage = ArrayList_init_0();
   numPasses = 1;
   main();
   Kotlin.defineModule('raytracerkotlin', _);

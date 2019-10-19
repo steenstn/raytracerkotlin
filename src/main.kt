@@ -30,7 +30,6 @@ val spheres = listOf(
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 val xmax = 5
 val ymax = 5
-var endColor = Vector()
 var endImage = arrayListOf<Double>()
 var numPasses = 1
 
@@ -51,6 +50,7 @@ fun raytrace() {
     for (screenY in 0 until height) {
 
         for (screenX in 0 until width) {
+            var endColor = Vector()
             val x = (screenX * 6.0) / width - 3.0
             val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
             val dir = Vector(x / xmax, y / ymax, -1.0).normalize()
@@ -63,9 +63,9 @@ fun raytrace() {
             }
 
             endColor /= numRays.toDouble()
-            endImage[index] += endColor.x// + image[index])
-            endImage[index+1] += endColor.y// + image[index])
-            endImage[index+2] += endColor.z// + image[index])
+            endImage[index] += endColor.x
+            endImage[index+1] += endColor.y
+            endImage[index+2] += endColor.z
 
             index+=3
 
@@ -82,10 +82,6 @@ fun raytrace() {
     println("posted message")
 
 
-}
-
-fun wait() {
-    self.setTimeout({wait()}, 500)
 }
 
 

@@ -32,7 +32,7 @@ val xmax = 5
 val ymax = 5
 var endColor = Vector()
 var endImage = arrayListOf<Double>()
-var numPasses = 0
+var numPasses = 1
 
  fun main() {
     println("Started webworker")
@@ -63,10 +63,9 @@ fun raytrace() {
             }
 
             endColor /= numRays.toDouble()
-            numPasses++
-            endImage[index] += endColor.x/numPasses// + image[index])
-            endImage[index+1] += endColor.y/numPasses// + image[index])
-            endImage[index+2] += endColor.z/numPasses// + image[index])
+            endImage[index] += endColor.x/numPasses.toDouble()// + image[index])
+            endImage[index+1] += endColor.y/numPasses.toDouble()// + image[index])
+            endImage[index+2] += endColor.z/numPasses.toDouble()// + image[index])
 
             index+=3
 
@@ -76,6 +75,8 @@ fun raytrace() {
             println(screenY)
         }
     }
+
+    numPasses++
     self.postMessage(JSON.stringify(endImage))
 
     println("posted message")

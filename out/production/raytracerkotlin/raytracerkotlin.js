@@ -60,7 +60,6 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        numPasses = numPasses + 1 | 0;
         endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x / numPasses);
         endImage.set_wxm5ur$(index + 1 | 0, endImage.get_za3lpa$(index + 1 | 0) + endColor.y / numPasses);
         endImage.set_wxm5ur$(index + 2 | 0, endImage.get_za3lpa$(index + 2 | 0) + endColor.z / numPasses);
@@ -70,6 +69,7 @@ var raytracerkotlin = function (_, Kotlin) {
         println(screenY);
       }
     }
+    numPasses = numPasses + 1 | 0;
     self.postMessage(JSON.stringify(endImage));
     println('posted message');
   }
@@ -381,7 +381,7 @@ var raytracerkotlin = function (_, Kotlin) {
   ymax = 5;
   endColor = Vector_init();
   endImage = ArrayList_init();
-  numPasses = 0;
+  numPasses = 1;
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

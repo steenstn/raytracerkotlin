@@ -29,6 +29,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var ymax;
   var endColor;
   var endImage;
+  var numPasses;
   function main$lambda(it) {
     println('worker got message!');
     raytrace();
@@ -59,9 +60,10 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x);
-        endImage.set_wxm5ur$(index + 1 | 0, endImage.get_za3lpa$(index + 1 | 0) + endColor.y);
-        endImage.set_wxm5ur$(index + 2 | 0, endImage.get_za3lpa$(index + 2 | 0) + endColor.z);
+        numPasses = numPasses + 1 | 0;
+        endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x / numPasses);
+        endImage.set_wxm5ur$(index + 1 | 0, endImage.get_za3lpa$(index + 1 | 0) + endColor.y / numPasses);
+        endImage.set_wxm5ur$(index + 2 | 0, endImage.get_za3lpa$(index + 2 | 0) + endColor.z / numPasses);
         index = index + 3 | 0;
       }
       if (screenY % 200 === 0) {
@@ -340,6 +342,14 @@ var raytracerkotlin = function (_, Kotlin) {
       endImage = value;
     }
   });
+  Object.defineProperty(_, 'numPasses', {
+    get: function () {
+      return numPasses;
+    },
+    set: function (value) {
+      numPasses = value;
+    }
+  });
   _.main = main;
   _.raytrace = raytrace;
   _.wait = wait;
@@ -371,6 +381,7 @@ var raytracerkotlin = function (_, Kotlin) {
   ymax = 5;
   endColor = Vector_init();
   endImage = ArrayList_init();
+  numPasses = 0;
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

@@ -20,7 +20,7 @@ z går mot skärmen
 */
 external val self: DedicatedWorkerGlobalScope
 val spheres = listOf(
-        Sphere(3.0, -2.0, 0.0, 1.0, Material(Vector(), Vector(4.0,4.0,4.0), Material.Type.LIGHT)),
+        Sphere(3.0, -2.0, 0.0, 1.0, Material(Vector(), Vector(40.0,40.0,40.0), Material.Type.LIGHT)),
         Sphere(-1.0, 0.0, -1.5, 1.0, Material(Vector(1.0,0.6,0.1),Vector(), Material.Type.DIFFUSE)),
         Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0), Vector(), Material.Type.DIFFUSE)),
         Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.5,0.2), Vector(), Material.Type.DIFFUSE))

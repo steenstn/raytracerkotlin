@@ -56,7 +56,7 @@ var render = function (_, Kotlin) {
     for (var y = 0; y < tmp$_1; y++) {
       tmp$_2 = width;
       for (var x = 0; x < tmp$_2; x++) {
-        context.fillStyle = fillStyle(toDouble(imageList.get_za3lpa$(index)), toDouble(imageList.get_za3lpa$(index + 1 | 0)), toDouble(imageList.get_za3lpa$(index + 2 | 0)));
+        context.fillStyle = fillStyle(doubleList.get_za3lpa$(index), doubleList.get_za3lpa$(index + 1 | 0), doubleList.get_za3lpa$(index + 2 | 0));
         context.fillRect(x, y, 1.0, 1.0);
         index = index + 3 | 0;
       }

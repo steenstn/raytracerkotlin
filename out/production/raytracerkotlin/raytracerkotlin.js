@@ -60,8 +60,8 @@ var raytracerkotlin = function (_, Kotlin) {
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
         var dir = (new Vector(x / xmax, y / ymax, -1.0)).normalize();
         var s = new Vector(0.0, 0.0, 7.0);
-        var numRays = 10;
-        for (var i = 0; i <= numRays; i++) {
+        var numRays = 100;
+        for (var i = 0; i < numRays; i++) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);

@@ -61,8 +61,8 @@ fun raytrace() {
 
             val s = Vector(0.0, 0.0, 7.0)
 
-            val numRays = 10
-            for (i in 0..numRays) {
+            val numRays = 100
+            for (i in 0 until numRays) {
                 endColor += shootRay(s, dir)
             }
 

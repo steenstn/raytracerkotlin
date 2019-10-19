@@ -35,12 +35,8 @@ fun main() {
 fun render(e: Event) {
 
     val event = e as MessageEvent
-    //println("message: " + event.data)
-    //println(jsTypeOf(event.data))
 
     val imageString = (event.data as String)
-    println("image from event in main thread")
-   // println(imageString)
     val imageList = imageString.substring(1,imageString.length-1).split(",")
     val doubleList = imageList.map { s -> s.toDouble() }
 

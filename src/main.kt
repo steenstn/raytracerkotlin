@@ -88,7 +88,6 @@ fun raytrace() {
 
     println("posted message")
 
-
 }
 
 
@@ -118,43 +117,4 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
         return closestIntersection.material.color * reflected
     }
 
-    /*for(sphere in spheres) {
-
-
-        sphere.getIntersection(start, direction)?.let {
-            if(it.material.type == Material.Type.LIGHT) {
-                return it.material.emittance
-            } else {
-                val randomVector = Vector.random()
-                val crossed = randomVector.cross(it.normal).normalize()
-                val eps1 = Random.nextDouble()*3.14159*2.0
-                val eps2 = sqrt(Random.nextDouble())
-
-                val x = cos(eps1)*eps2
-                val y = sin(eps1)*eps2
-                val z = sqrt(1.0 - eps2*eps2)
-
-                val tangent = it.normal.cross(crossed)
-
-                val newDirection = crossed * x + tangent * y + it.normal * z
-                val reflected = shootRay(it.position, newDirection)
-                return it.material.color * reflected
-            }
-        }
-    }*/
-}
-fun fillStyle(r: Double, g: Double, b: Double) : String {
-    return fillStyle(round(r*255).toInt(), round(g*255).toInt(), round(b*255).toInt())
-}
-
-fun fillStyle(r: Int, g: Int, b: Int) : String {
-    return "rgb($r, $g, $b)"
-}
-
-fun fillStyle(color : Vector) : String {
-    val r = (color.x*255).toInt()
-    val g = (color.y*255).toInt()
-    val b = (color.z*255).toInt()
-
-    return "rgb($r, $g, $b)"
 }

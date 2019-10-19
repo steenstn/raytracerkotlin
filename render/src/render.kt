@@ -32,10 +32,6 @@ fun main() {
 
 }
 
-fun wait() {
-    window.setTimeout({wait()}, 100)
-}
-
 fun render(e: Event) {
 
     val event = e as MessageEvent
@@ -44,7 +40,7 @@ fun render(e: Event) {
 
     val imageString = (event.data as String)
     println("image from event in main thread")
-    println(imageString)
+   // println(imageString)
     val imageList = imageString.substring(1,imageString.length-1).split(",")
     val doubleList = imageList.map { s -> s.toDouble() }
     //context.fillStyle = fillStyle(50+Random.nextInt(150),50+Random.nextInt(150),50+Random.nextInt(150))
@@ -60,7 +56,7 @@ fun render(e: Event) {
     }
     println("rendered")
     worker!!.postMessage("start")
-    window.setTimeout({wait()}, 10)
+
 
 }
 

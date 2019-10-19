@@ -36,23 +36,11 @@ var render = function (_, Kotlin) {
     ensureNotNull(worker).postMessage('start');
     ensureNotNull(worker).addEventListener('message', main$lambda);
   }
-  function wait$lambda() {
-    wait();
-    return Unit;
-  }
-  function wait() {
-    window.setTimeout(wait$lambda, 100);
-  }
-  function render$lambda() {
-    wait();
-    return Unit;
-  }
   function render(e) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
     var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
     println('image from event in main thread');
-    println(imageString);
     var endIndex = imageString.length - 1 | 0;
     var imageList = split(imageString.substring(1, endIndex), [',']);
     var destination = ArrayList_init_0(collectionSizeOrDefault(imageList, 10));
@@ -75,7 +63,6 @@ var render = function (_, Kotlin) {
     }
     println('rendered');
     ensureNotNull(worker).postMessage('start');
-    window.setTimeout(render$lambda, 10);
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));
@@ -112,7 +99,6 @@ var render = function (_, Kotlin) {
     }
   });
   _.main = main;
-  _.wait = wait;
   _.render_9ojx7i$ = render;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;

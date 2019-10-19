@@ -11,7 +11,6 @@ var raytracerkotlin = function (_, Kotlin) {
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var Math_0 = Math;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
@@ -39,7 +38,7 @@ var raytracerkotlin = function (_, Kotlin) {
     self.addEventListener('message', main$lambda);
   }
   function raytrace() {
-    var tmp$, tmp$_0;
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     var index = 0;
     tmp$ = height;
     for (var screenY = 0; screenY <= tmp$; screenY++) {
@@ -54,10 +53,9 @@ var raytracerkotlin = function (_, Kotlin) {
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
-        endImage.add_11rb$(endColor.x);
-        endImage.add_11rb$(endColor.y);
-        endImage.add_11rb$(endColor.z);
-        index = index + 3 | 0;
+        endImage[tmp$_1 = index, index = tmp$_1 + 1 | 0, tmp$_1] = endColor.x;
+        endImage[tmp$_2 = index, index = tmp$_2 + 1 | 0, tmp$_2] = endColor.y;
+        endImage[tmp$_3 = index, index = tmp$_3 + 1 | 0, tmp$_3] = endColor.z;
       }
       if (screenY % 200 === 0) {
         println(screenY);
@@ -365,7 +363,13 @@ var raytracerkotlin = function (_, Kotlin) {
   xmax = 5;
   ymax = 5;
   endColor = Vector_init();
-  endImage = ArrayList_init();
+  var array = new Float64Array(Kotlin.imul(width, height) * 3 | 0);
+  var tmp$;
+  tmp$ = array.length - 1 | 0;
+  for (var i = 0; i <= tmp$; i++) {
+    array[i] = 0.0;
+  }
+  endImage = array;
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

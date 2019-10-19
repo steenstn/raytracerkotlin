@@ -31,7 +31,7 @@ val spheres = listOf(
 val xmax = 5
 val ymax = 5
 var endColor = Vector()
-var endImage = arrayListOf<Double>()
+var endImage = DoubleArray(width*height*3) {0.0}
 
  fun main() {
      println("Started webworker")
@@ -59,10 +59,10 @@ fun raytrace() {
             }
 
             endColor /= numRays.toDouble()
-            endImage.add (endColor.x)// + image[index])
-            endImage.add(endColor.y)// + image[index])
-            endImage.add(endColor.z)// + image[index])
-index+=3
+            endImage[index++] = endColor.x// + image[index])
+            endImage[index++] = endColor.y// + image[index])
+            endImage[index++] = endColor.z// + image[index])
+
 
         }
 

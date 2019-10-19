@@ -36,7 +36,7 @@ var endImage = arrayListOf<Double>()
 
  fun main() {
     println("Started webworker")
-    for(i in 0..width*height*3)
+    for(i in 0..width*height*3+1)
     {
         endImage.add(0.0)
     }

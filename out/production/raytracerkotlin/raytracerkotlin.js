@@ -37,7 +37,7 @@ var raytracerkotlin = function (_, Kotlin) {
   function main() {
     var tmp$;
     println('Started webworker');
-    tmp$ = Kotlin.imul(width, height) * 3 | 0;
+    tmp$ = (Kotlin.imul(width, height) * 3 | 0) + 1 | 0;
     for (var i = 0; i <= tmp$; i++) {
       endImage.add_11rb$(0.0);
     }

@@ -64,6 +64,7 @@ var raytracerkotlin = function (_, Kotlin) {
         var s = new Vector(0.0, 0.0, 7.0);
         var numRays = 100;
         for (var i = 0; i < numRays; i++) {
+          numBounces = 0;
           endColor = endColor.plus_spvnod$(shootRay(s, dir));
         }
         endColor = endColor.div_14dthe$(numRays);
@@ -431,7 +432,7 @@ var raytracerkotlin = function (_, Kotlin) {
   spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(40.0, 40.0, 40.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
   xmax = 5;
   ymax = 5;
-  maxBounces = 20;
+  maxBounces = 50;
   numBounces = 0;
   endImage = ArrayList_init_0();
   numPasses = 1;

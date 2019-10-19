@@ -34,7 +34,7 @@ val spheres = listOf(
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 val xmax = 5
 val ymax = 5
-val maxBounces = 20
+val maxBounces = 50
 var numBounces = 0
 var endImage = arrayListOf<Double>()
 var numPasses = 1
@@ -65,6 +65,7 @@ fun raytrace() {
 
             val numRays = 100
             for (i in 0 until numRays) {
+                numBounces = 0
                 endColor += shootRay(s, dir)
             }
 

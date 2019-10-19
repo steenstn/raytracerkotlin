@@ -37,21 +37,12 @@ var endImage = arrayListOf<Double>()
      println("Started webworker")
 
      self.addEventListener("message",  {
-         val event = it as MessageEvent
-         val imageString = (event.data as String)
-         val imageList = imageString.substring(1,imageString.length-1).split(",")
-         val imageListDouble = arrayListOf<Double>()
-         for(element in imageList) {
-             imageListDouble.add(element.toDouble())
-         }
-         println("image in webworker")
-         println(imageListDouble)
-         raytrace(imageListDouble)
+         println("worker got message!")
+         raytrace()
      })
 }
 
-fun raytrace(image: List<Double>) {
-    var newImage = arrayListOf<Double>()
+fun raytrace() {
     var index = 0
     for (screenY in 0..height) {
 
@@ -63,17 +54,14 @@ fun raytrace(image: List<Double>) {
             val s = Vector(0.0, 0.0, 7.0)
 
             val numRays = 10
-            if(index+3 < image.size) {
-                endColor = Vector(image[index], image[index + 1], image[index + 2])
-            }
             for (i in 0..numRays) {
                 endColor += shootRay(s, dir)
             }
 
             endColor /= numRays.toDouble()
-            newImage.add (endColor.x)// + image[index])
-            newImage.add(endColor.y)// + image[index])
-            newImage.add(endColor.z)// + image[index])
+            endImage.add (endColor.x)// + image[index])
+            endImage.add(endColor.y)// + image[index])
+            endImage.add(endColor.z)// + image[index])
 index+=3
 
         }
@@ -82,13 +70,17 @@ index+=3
             println(screenY)
         }
     }
-    self.postMessage(JSON.stringify(newImage))
+    self.postMessage(JSON.stringify(endImage))
 
     println("posted message")
 
 
-    self.close()
 }
+
+fun wait() {
+    self.setTimeout({wait()}, 500)
+}
+
 
  fun shootRay(start : Vector, direction : Vector) : Vector {
 

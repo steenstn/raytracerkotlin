@@ -4,6 +4,7 @@ if (typeof kotlin === 'undefined') {
 var render = function (_, Kotlin) {
   'use strict';
   var throwCCE = Kotlin.throwCCE;
+  var ensureNotNull = Kotlin.ensureNotNull;
   var Unit = Kotlin.kotlin.Unit;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var split = Kotlin.kotlin.text.split_ip8yn$;
@@ -17,11 +18,10 @@ var render = function (_, Kotlin) {
   var height;
   var canvas;
   var context;
-  function main$lambda(closure$blackImage) {
-    return function () {
-      render(closure$blackImage);
-      return Unit;
-    };
+  var worker;
+  function main$lambda(e) {
+    render(e);
+    return Unit;
   }
   function main() {
     var tmp$;
@@ -32,15 +32,22 @@ var render = function (_, Kotlin) {
     for (var i = 0; i <= tmp$; i++) {
       blackImage.add_11rb$(0.0);
     }
-    window.setTimeout(main$lambda(blackImage), 1);
+    worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
+    ensureNotNull(worker).postMessage('start');
+    ensureNotNull(worker).addEventListener('message', main$lambda);
   }
-  function render$lambda$lambda$lambda(closure$doubleList) {
-    return function () {
-      render(closure$doubleList);
-      return Unit;
-    };
+  function wait$lambda() {
+    wait();
+    return Unit;
   }
-  function render$lambda(e) {
+  function wait() {
+    window.setTimeout(wait$lambda, 100);
+  }
+  function render$lambda() {
+    wait();
+    return Unit;
+  }
+  function render(e) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2;
     var event = Kotlin.isType(tmp$ = e, MessageEvent) ? tmp$ : throwCCE();
     var imageString = typeof (tmp$_0 = event.data) === 'string' ? tmp$_0 : throwCCE();
@@ -67,13 +74,7 @@ var render = function (_, Kotlin) {
       }
     }
     println('rendered');
-    window.setTimeout(render$lambda$lambda$lambda(doubleList), 10);
-    return Unit;
-  }
-  function render(image) {
-    var worker = new Worker('out/production/raytracerkotlin/raytracerkotlin.js');
-    worker.postMessage(JSON.stringify(image));
-    worker.addEventListener('message', render$lambda);
+    window.setTimeout(render$lambda, 10);
   }
   function fillStyle(r, g, b) {
     return fillStyle_0(numberToInt(round(r * 255)), numberToInt(round(g * 255)), numberToInt(round(b * 255)));
@@ -101,8 +102,17 @@ var render = function (_, Kotlin) {
       return context;
     }
   });
+  Object.defineProperty(_, 'worker', {
+    get: function () {
+      return worker;
+    },
+    set: function (value) {
+      worker = value;
+    }
+  });
   _.main = main;
-  _.render_d3e2cz$ = render;
+  _.wait = wait;
+  _.render_9ojx7i$ = render;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
   width = 500;
@@ -110,6 +120,7 @@ var render = function (_, Kotlin) {
   var tmp$, tmp$_0;
   canvas = Kotlin.isType(tmp$ = document.getElementById('c'), HTMLCanvasElement) ? tmp$ : throwCCE();
   context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();
+  worker = null;
   main();
   Kotlin.defineModule('render', _);
   return _;

@@ -26,6 +26,9 @@ var raytracerkotlin = function (_, Kotlin) {
   Sphere.prototype.constructor = Sphere;
   var width;
   var height;
+  function clamp(value, min, max) {
+    return value > max ? max : value < min ? min : value;
+  }
   var spheres;
   var xmax;
   var ymax;
@@ -77,7 +80,7 @@ var raytracerkotlin = function (_, Kotlin) {
     tmp$_1 = $receiver.iterator();
     while (tmp$_1.hasNext()) {
       var item = tmp$_1.next();
-      destination.add_11rb$(item / numPasses);
+      destination.add_11rb$(clamp(item / numPasses, 0.0, 1.0));
     }
     var imageToRender = destination;
     numPasses = numPasses + 1 | 0;
@@ -315,6 +318,7 @@ var raytracerkotlin = function (_, Kotlin) {
       return height;
     }
   });
+  _.clamp_yvo9jy$ = clamp;
   Object.defineProperty(_, 'spheres', {
     get: function () {
       return spheres;

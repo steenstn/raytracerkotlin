@@ -63,9 +63,9 @@ fun raytrace() {
             }
 
             endColor /= numRays.toDouble()
-            endImage[index] += endColor.x/numPasses.toDouble()// + image[index])
-            endImage[index+1] += endColor.y/numPasses.toDouble()// + image[index])
-            endImage[index+2] += endColor.z/numPasses.toDouble()// + image[index])
+            endImage[index] += endColor.x// + image[index])
+            endImage[index+1] += endColor.y// + image[index])
+            endImage[index+2] += endColor.z// + image[index])
 
             index+=3
 
@@ -75,9 +75,9 @@ fun raytrace() {
             println(screenY)
         }
     }
-
+    val imageToRender = endImage.map { it/numPasses }
     numPasses++
-    self.postMessage(JSON.stringify(endImage))
+    self.postMessage(JSON.stringify(imageToRender))
 
     println("posted message")
 

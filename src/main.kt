@@ -34,6 +34,8 @@ val spheres = listOf(
 //val context = canvas.getContext("2d") as CanvasRenderingContext2D
 val xmax = 5
 val ymax = 5
+val maxBounces = 20
+var numBounces = 0
 var endImage = arrayListOf<Double>()
 var numPasses = 1
 
@@ -90,8 +92,10 @@ fun raytrace() {
 
 
 fun shootRay(start : Vector, direction : Vector) : Vector {
-
-    val intersections = spheres.map { it.getIntersection(start, direction) }.filterNotNull()
+    if(numBounces++ > maxBounces) {
+        return Vector()
+    }
+    val intersections = spheres.mapNotNull { it.getIntersection(start, direction) }
     val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return Vector(0.0,0.0,0.0)
 
     if(closestIntersection.material.type == Material.Type.LIGHT) {

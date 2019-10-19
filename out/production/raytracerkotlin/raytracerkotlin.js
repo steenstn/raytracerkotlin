@@ -7,14 +7,13 @@ var raytracerkotlin = function (_, Kotlin) {
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
-  var filterNotNull = Kotlin.kotlin.collections.filterNotNull_m3lr2h$;
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
-  var Math_0 = Math;
   var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_287e2$;
+  var Math_0 = Math;
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
@@ -33,6 +32,8 @@ var raytracerkotlin = function (_, Kotlin) {
   var spheres;
   var xmax;
   var ymax;
+  var maxBounces;
+  var numBounces;
   var endImage;
   var numPasses;
   function main$lambda(it) {
@@ -89,16 +90,22 @@ var raytracerkotlin = function (_, Kotlin) {
     println('posted message');
   }
   function shootRay(start, direction) {
-    var tmp$;
-    var $receiver = spheres;
-    var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
-    var tmp$_0;
-    tmp$_0 = $receiver.iterator();
-    while (tmp$_0.hasNext()) {
-      var item = tmp$_0.next();
-      destination.add_11rb$(item.getIntersection_nmolro$(start, direction));
+    var tmp$, tmp$_0;
+    if ((tmp$ = numBounces, numBounces = tmp$ + 1 | 0, tmp$) > maxBounces) {
+      return Vector_init();
     }
-    var intersections = filterNotNull(destination);
+    var $receiver = spheres;
+    var destination = ArrayList_init_0();
+    var tmp$_1;
+    tmp$_1 = $receiver.iterator();
+    while (tmp$_1.hasNext()) {
+      var element = tmp$_1.next();
+      var tmp$_0_0;
+      if ((tmp$_0_0 = element.getIntersection_nmolro$(start, direction)) != null) {
+        destination.add_11rb$(tmp$_0_0);
+      }
+    }
+    var intersections = destination;
     var minBy$result;
     minBy$break: do {
       var iterator = intersections.iterator();
@@ -124,11 +131,11 @@ var raytracerkotlin = function (_, Kotlin) {
       minBy$result = minElem;
     }
      while (false);
-    tmp$ = minBy$result;
-    if (tmp$ == null) {
+    tmp$_0 = minBy$result;
+    if (tmp$_0 == null) {
       return new Vector(0.0, 0.0, 0.0);
     }
-    var closestIntersection = tmp$;
+    var closestIntersection = tmp$_0;
     if (closestIntersection.material.type === Material$Type$LIGHT_getInstance()) {
       return closestIntersection.material.emittance;
     }
@@ -367,6 +374,19 @@ var raytracerkotlin = function (_, Kotlin) {
       return ymax;
     }
   });
+  Object.defineProperty(_, 'maxBounces', {
+    get: function () {
+      return maxBounces;
+    }
+  });
+  Object.defineProperty(_, 'numBounces', {
+    get: function () {
+      return numBounces;
+    },
+    set: function (value) {
+      numBounces = value;
+    }
+  });
   Object.defineProperty(_, 'endImage', {
     get: function () {
       return endImage;
@@ -411,6 +431,8 @@ var raytracerkotlin = function (_, Kotlin) {
   spheres = listOf([new Sphere(3.0, -2.0, 0.0, 1.0, new Material(Vector_init(), new Vector(40.0, 40.0, 40.0), Material$Type$LIGHT_getInstance())), new Sphere(-1.0, 0.0, -1.5, 1.0, new Material(new Vector(1.0, 0.6, 0.1), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, new Material(new Vector(0.2, 0.5, 1.0), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), new Material(new Vector(0.2, 0.5, 0.2), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
   xmax = 5;
   ymax = 5;
+  maxBounces = 20;
+  numBounces = 0;
   endImage = ArrayList_init_0();
   numPasses = 1;
   main();

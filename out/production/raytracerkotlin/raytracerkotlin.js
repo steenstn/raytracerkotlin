@@ -7,7 +7,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
-  var ensureNotNull = Kotlin.ensureNotNull;
+  var filterNotNull = Kotlin.kotlin.collections.filterNotNull_m3lr2h$;
   var Random = Kotlin.kotlin.random.Random;
   var round = Kotlin.kotlin.math.round_14dthe$;
   var numberToInt = Kotlin.numberToInt;
@@ -89,15 +89,16 @@ var raytracerkotlin = function (_, Kotlin) {
     println('posted message');
   }
   function shootRay(start, direction) {
+    var tmp$;
     var $receiver = spheres;
     var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
-    var tmp$;
-    tmp$ = $receiver.iterator();
-    while (tmp$.hasNext()) {
-      var item = tmp$.next();
+    var tmp$_0;
+    tmp$_0 = $receiver.iterator();
+    while (tmp$_0.hasNext()) {
+      var item = tmp$_0.next();
       destination.add_11rb$(item.getIntersection_nmolro$(start, direction));
     }
-    var intersections = destination;
+    var intersections = filterNotNull(destination);
     var minBy$result;
     minBy$break: do {
       var iterator = intersections.iterator();
@@ -110,10 +111,10 @@ var raytracerkotlin = function (_, Kotlin) {
         minBy$result = minElem;
         break minBy$break;
       }
-      var minValue = ensureNotNull(minElem).position.minus_spvnod$(start).length();
+      var minValue = minElem.position.minus_spvnod$(start).length();
       do {
         var e = iterator.next();
-        var v = ensureNotNull(e).position.minus_spvnod$(start).length();
+        var v = e.position.minus_spvnod$(start).length();
         if (Kotlin.compareTo(minValue, v) > 0) {
           minElem = e;
           minValue = v;
@@ -123,8 +124,12 @@ var raytracerkotlin = function (_, Kotlin) {
       minBy$result = minElem;
     }
      while (false);
-    var closestIntersection = minBy$result;
-    if (ensureNotNull(closestIntersection).material.type === Material$Type$LIGHT_getInstance()) {
+    tmp$ = minBy$result;
+    if (tmp$ == null) {
+      return new Vector(0.0, 0.0, 0.0);
+    }
+    var closestIntersection = tmp$;
+    if (closestIntersection.material.type === Material$Type$LIGHT_getInstance()) {
       return closestIntersection.material.emittance;
     }
      else {

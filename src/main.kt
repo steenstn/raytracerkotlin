@@ -91,10 +91,10 @@ fun raytrace() {
 
 fun shootRay(start : Vector, direction : Vector) : Vector {
 
-    val intersections = spheres.map { it.getIntersection(start, direction) }
-    val closestIntersection = intersections.minBy { (it!!.position-start).length() }
+    val intersections = spheres.map { it.getIntersection(start, direction) }.filterNotNull()
+    val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return Vector(0.0,0.0,0.0)
 
-    if(closestIntersection!!.material.type == Material.Type.LIGHT) {
+    if(closestIntersection.material.type == Material.Type.LIGHT) {
         return closestIntersection.material.emittance
     } else {
         val randomVector = Vector.random()
@@ -137,7 +137,6 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
             }
         }
     }*/
-    return Vector(0.0,0.0,0.0)
 }
 fun fillStyle(r: Double, g: Double, b: Double) : String {
     return fillStyle(round(r*255).toInt(), round(g*255).toInt(), round(b*255).toInt())

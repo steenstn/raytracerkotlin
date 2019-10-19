@@ -59,6 +59,7 @@ fun render(e: Event) {
         }
     }
     println("rendered")
+    worker!!.postMessage("start")
     window.setTimeout({wait()}, 10)
 
 }

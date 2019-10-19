@@ -74,6 +74,7 @@ var render = function (_, Kotlin) {
       }
     }
     println('rendered');
+    ensureNotNull(worker).postMessage('start');
     window.setTimeout(render$lambda, 10);
   }
   function fillStyle(r, g, b) {

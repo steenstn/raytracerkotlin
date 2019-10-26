@@ -2,14 +2,11 @@ import org.w3c.dom.DedicatedWorkerGlobalScope
 import org.w3c.dom.MessageEvent
 import kotlin.browser.document
 import kotlin.browser.window
-import kotlin.math.cos
-import kotlin.math.round
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 import kotlin.random.Random
 
-val width = 800
-val height = 500
+val width = 500
+val height = 300
 
 /*
 Vänsterorienterat
@@ -24,18 +21,27 @@ fun clamp(value : Double, min : Double, max : Double) : Double {
 }
 external val self: DedicatedWorkerGlobalScope
 val spheres = listOf(
-        Sphere(3.0, -2.0, 0.0, 1.0, Material.light(40.0, 40.0, 40.0)),
-        Sphere(-1.0, 0.0, -2.5, 1.0, Material(Vector(1.0,0.6,0.1),Vector(), Material.Type.SPECULAR)),
-        Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0), Vector(), Material.Type.DIFFUSE)),
-        Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.5,0.2), Vector(), Material.Type.DIFFUSE))
+        //Sphere(3.0, -2.0, 15.0, 1.0, Material.light(100.0)),
+        Sphere(7.5, -5.0, -2.0, 2.0, Material.light(20.0)),
+        Sphere(-1.0, 0.0, -2.5, 1.0, Material(Vector(1.0,0.6,0.1).mixWhite(),Vector(), Material.Type.SPECULAR)),
+        Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+        //Plane(15.0, 0.0, 0.0, Vector(-1.0,0.0,0.0), Material(Vector(0.25,0.53,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+        //Plane(-15.0, 0.0, 0.0, Vector(1.0,0.0,0.0), Material(Vector(0.12,0.15,0.12).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+        Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE))
+       // Plane(0.0, -6.0, 0.0, Vector(0.0,1.0,0.0), Material(Vector(0.2,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+      //  Plane(0.0, 0.0, 15.0, Vector(0.0,0.0,-1.0), Material(Vector(0.25,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+     //   Plane(0.0, 0.0, -15.0, Vector(0.0,0.0,1.0), Material(Vector(0.25,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE))
+
         )
 
 val xmax = 5
 val ymax = 5
-val maxBounces = 50
+val maxBounces = 10
 var numBounces = 0
 var endImage = arrayListOf<Double>()
 var numPasses = 1
+val DoF = 0.0
+val focusLength = 7.0
 
  fun main() {
     println("Started webworker")
@@ -57,14 +63,16 @@ fun raytrace() {
             var endColor = Vector()
             val x = (screenX * 6.0) / width - 3.0
             val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
-            val dir = Vector(x / xmax, y / ymax, -1.0).normalize()
+            val dir = Vector(x / xmax, (y-0) / ymax, -1.0).normalize()
 
             val s = Vector(0.0, -0.5, 7.0)
 
-            val numRays = 100
+            val numRays = 10
             for (i in 0 until numRays) {
                 numBounces = 0
+
                 endColor += shootRay(s, dir)
+
             }
 
             endColor /= numRays.toDouble()
@@ -76,7 +84,7 @@ fun raytrace() {
 
         }
 
-        if (screenY % 200 == 0) {
+        if (screenY % 50 == 0) {
             println(screenY)
         }
     }
@@ -94,11 +102,12 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
         return Vector()
     }
     val intersections = spheres.mapNotNull { it.getIntersection(start, direction) }
-    val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return Vector(0.50,0.50,0.80)
+    val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return Vector()
 
     if(closestIntersection.material.types.contains(Material.Type.LIGHT)) {
         return closestIntersection.material.emittance
     } else {
+       // val explicitRay = explicitRay(closestIntersection)
         val randomVector = Vector.random()
         val crossed = randomVector.cross(closestIntersection.normal).normalize()
         val eps1 = Random.nextDouble()*3.14159*2.0
@@ -118,7 +127,24 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
         }
 
         val reflected = shootRay(closestIntersection.position, newDirection)
-        return closestIntersection.material.color * reflected
+        return closestIntersection.material.color * reflected// + explicitRay
     }
 
+}
+
+fun explicitRay(surfacePoint :SurfacePoint) : Vector {
+    val lights = spheres.filter { it.material.types.contains(Material.Type.LIGHT) }
+    var lightValue = Vector()
+    lights.forEach {
+        val randomPointOnLight = it.getRandomPoint()
+        val direction = randomPointOnLight.position - surfacePoint.position
+
+        val intersections = spheres.mapNotNull { s -> s.getIntersection(surfacePoint.position, direction) }
+        val closestIntersection = intersections.minBy { s -> (s.position-surfacePoint.position).length()}
+
+        if(closestIntersection != null && closestIntersection.material.isLight()) {
+            lightValue += (surfacePoint.material.color * surfacePoint.normal.dot(closestIntersection.normal))*-1.0
+        }
+    }
+    return lightValue
 }

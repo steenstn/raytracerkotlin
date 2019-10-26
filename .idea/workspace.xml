@@ -11,6 +11,11 @@
       <change beforePath="$PROJECT_DIR$/out/production/render/render/root-package.kjsm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/render/render/root-package.kjsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/src/render.kt" beforeDir="false" afterPath="$PROJECT_DIR$/render/src/render.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Material.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Material.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Mesh.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mesh.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Plane.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Plane.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sphere.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sphere.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SurfacePoint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/SurfacePoint.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vector.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vector.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,6 +41,10 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="raytracerkotlin" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../coroutines" />
   </component>

@@ -101,8 +101,8 @@ var render = function (_, Kotlin) {
   _.render_9ojx7i$ = render;
   _.fillStyle_yvo9jy$ = fillStyle;
   _.fillStyle_qt1dr2$ = fillStyle_0;
-  width = 800;
-  height = 500;
+  width = 500;
+  height = 300;
   var tmp$, tmp$_0;
   canvas = Kotlin.isType(tmp$ = document.getElementById('c'), HTMLCanvasElement) ? tmp$ : throwCCE();
   context = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();

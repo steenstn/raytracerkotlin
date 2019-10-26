@@ -1,7 +1,7 @@
 import kotlin.math.min
 import kotlin.math.sqrt
 
-class Sphere(x: Double, y: Double, z: Double, val radius : Double, val material : Material) : Mesh(x, y, z) {
+class Sphere(x: Double, y: Double, z: Double, val radius : Double, material : Material) : Mesh(x, y, z, material) {
 
     override fun getIntersection(start: Vector, direction: Vector): SurfacePoint? {
         val center  = this.position
@@ -27,5 +27,9 @@ class Sphere(x: Double, y: Double, z: Double, val radius : Double, val material 
         return pos.minus(position).normalize()
     }
 
+    override fun getRandomPoint() : SurfacePoint {
+        val randomPoint = Vector.random().normalize() * radius
+        return SurfacePoint(randomPoint, getNormal(randomPoint), material)
+    }
 
 }

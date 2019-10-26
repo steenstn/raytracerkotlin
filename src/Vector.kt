@@ -26,6 +26,10 @@ class Vector (val x: Double, val y: Double, val z: Double) {
         return sqrt(x*x+y*y+z*z)
     }
 
+    fun mixWhite() : Vector {
+        return Vector((x+1.0)/2.0, (y+1.0)/2.0,(z+1.0)/2)
+    }
+
     fun cross(vec: Vector) : Vector {
         return Vector(y*vec.z-z*vec.y,-1*(x*vec.z-z*vec.x),x*vec.y-y*vec.x)
     }

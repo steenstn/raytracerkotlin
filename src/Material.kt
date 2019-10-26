@@ -9,5 +9,14 @@
          fun light(r : Double, g: Double, b: Double) : Material{
              return Material(Vector(1.0, 1.0, 1.0), Vector(r, g, b), setOf(Type.LIGHT))
          }
+
+         fun light(rgb : Double) : Material {
+             return light(rgb, rgb, rgb)
+         }
+     }
+
+
+     fun isLight() : Boolean {
+         return this.types.contains(Type.LIGHT)
      }
 }

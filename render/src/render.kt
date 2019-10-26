@@ -9,10 +9,10 @@ import kotlin.math.round
 import kotlin.random.Random
 import kotlin.reflect.typeOf
 
-val width = 800
-val height = 500
+val width = 500
+val height = 300
 /*
-importScripts("https://steenstn.github.io/raytracerkotlin/out/production/raytracerkotlin/lib/kotlin.js")
+importScripts("lib/kotlin.js")
  */
 
 val canvas = document.getElementById("c") as HTMLCanvasElement

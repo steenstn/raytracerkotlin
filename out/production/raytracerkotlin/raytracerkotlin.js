@@ -69,7 +69,10 @@ var raytracerkotlin = function (_, Kotlin) {
         var numRays = 10;
         for (var i = 0; i < numRays; i++) {
           numBounces = 0;
-          endColor = endColor.plus_spvnod$(shootRay(s, dir));
+          var s2 = s.plus_spvnod$(Vector$Companion_getInstance().random().times_14dthe$(DoF));
+          var position2 = s.plus_spvnod$(dir.times_14dthe$(focusLength));
+          var dir2 = position2.minus_spvnod$(s2);
+          endColor = endColor.plus_spvnod$(shootRay(s2, dir2.normalize()));
         }
         endColor = endColor.div_14dthe$(numRays);
         endImage.set_wxm5ur$(index, endImage.get_za3lpa$(index) + endColor.x);
@@ -155,7 +158,7 @@ var raytracerkotlin = function (_, Kotlin) {
       var y = Math_0.sin(eps1) * eps2;
       var x_1 = 1.0 - eps2 * eps2;
       var z = Math_0.sqrt(x_1);
-      var tangent = closestIntersection.normal.cross_spvnod$(crossed).normalize();
+      var tangent = closestIntersection.normal.cross_spvnod$(crossed);
       if (closestIntersection.material.types.contains_11rb$(Material$Type$SPECULAR_getInstance()) && Random.Default.nextDouble() > 0.4) {
         tmp$_1 = direction.minus_spvnod$(closestIntersection.normal.times_14dthe$(2.0).times_14dthe$(closestIntersection.normal.dot_spvnod$(direction)));
       }
@@ -567,14 +570,14 @@ var raytracerkotlin = function (_, Kotlin) {
   _.Vector = Vector;
   width = 500;
   height = 300;
-  spheres = listOf([new Sphere(3.5, -5.0, -5.0, 2.0, Material$Companion_getInstance().light_14dthe$(20.0)), new Sphere(-1.0, 0.0, -2.5, 1.0, Material_init((new Vector(1.0, 0.6, 0.1)).mixWhite(), Vector_init(), Material$Type$SPECULAR_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, Material_init((new Vector(0.2, 0.5, 1.0)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), Material_init((new Vector(0.2, 0.3, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
+  spheres = listOf([new Sphere(-2.0, -1.0, -3.0, 2.0, Material_init((new Vector(1.0, 0.6, 0.1)).mixWhite(), Vector_init(), Material$Type$SPECULAR_getInstance())), new Sphere(1.0, 0.5, 0.0, 0.5, Material_init((new Vector(0.2, 0.5, 1.0)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Sphere(3.0, -2.0, -3.0, 3.0, Material_init((new Vector(0.8, 0.2, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), Material_init((new Vector(0.2, 0.3, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, -1000.0, 0.0, new Vector(0.0, 1.0, 0.0), Material$Companion_getInstance().light_yvo9jy$(0.9, 0.9, 1.0))]);
   xmax = 5;
   ymax = 5;
   maxBounces = 10;
   numBounces = 0;
   endImage = ArrayList_init_0();
   numPasses = 1;
-  DoF = 0.0;
+  DoF = 0.1;
   focusLength = 7.0;
   main();
   Kotlin.defineModule('raytracerkotlin', _);

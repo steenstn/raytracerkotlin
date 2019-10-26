@@ -20,19 +20,15 @@ fun clamp(value : Double, min : Double, max : Double) : Double {
     return if(value > max) max else if (value < min) min else value
 }
 external val self: DedicatedWorkerGlobalScope
-val spheres = listOf(
-        //Sphere(3.0, -2.0, 15.0, 1.0, Material.light(100.0)),
-        Sphere(3.5, -5.0, -5.0, 2.0, Material.light(20.0)),
-        Sphere(-1.0, 0.0, -2.5, 1.0, Material(Vector(1.0,0.6,0.1).mixWhite(),Vector(), Material.Type.SPECULAR)),
-        Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0).mixWhite(), Vector(), Material.Type.DIFFUSE)),
-        //Plane(15.0, 0.0, 0.0, Vector(-1.0,0.0,0.0), Material(Vector(0.25,0.53,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
-        //Plane(-15.0, 0.0, 0.0, Vector(1.0,0.0,0.0), Material(Vector(0.12,0.15,0.12).mixWhite(), Vector(), Material.Type.DIFFUSE)),
-        Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE))
-       // Plane(0.0, -6.0, 0.0, Vector(0.0,1.0,0.0), Material(Vector(0.2,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
-      //  Plane(0.0, 0.0, 15.0, Vector(0.0,0.0,-1.0), Material(Vector(0.25,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
-     //   Plane(0.0, 0.0, -15.0, Vector(0.0,0.0,1.0), Material(Vector(0.25,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE))
 
-        )
+val spheres = listOf(
+    //Sphere(3.5, -5.0, -5.0, 2.0, Material.light(20.0)),
+    Sphere(-2.0, -1.0, -3.0, 2.0, Material(Vector(1.0,0.6,0.1).mixWhite(),Vector(), Material.Type.SPECULAR)),
+    Sphere(1.0, 0.5, 0.0, 0.5, Material(Vector(0.2,0.5,1.0).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+    Sphere(3.0, -2.0, -3.0, 3.0, Material(Vector(0.8,0.2,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+    Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+    Plane(0.0, -1000.0, 0.0, Vector(0.0,1.0,0.0), Material.light(0.9,0.9,1.0))
+)
 
 val xmax = 5
 val ymax = 5
@@ -40,7 +36,7 @@ val maxBounces = 10
 var numBounces = 0
 var endImage = arrayListOf<Double>()
 var numPasses = 1
-val DoF = 0.0
+val DoF = 0.1
 val focusLength = 7.0
 
  fun main() {
@@ -70,8 +66,10 @@ fun raytrace() {
             val numRays = 10
             for (i in 0 until numRays) {
                 numBounces = 0
-
-                endColor += shootRay(s, dir)
+                val s2 = s + Vector.random()*DoF
+                val position2 = s + dir*focusLength
+                val dir2 = position2 - s2
+                endColor += shootRay(s2, dir2.normalize())
 
             }
 

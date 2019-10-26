@@ -22,7 +22,7 @@ fun clamp(value : Double, min : Double, max : Double) : Double {
 external val self: DedicatedWorkerGlobalScope
 val spheres = listOf(
         //Sphere(3.0, -2.0, 15.0, 1.0, Material.light(100.0)),
-        Sphere(7.5, -5.0, -2.0, 2.0, Material.light(20.0)),
+        Sphere(3.5, -5.0, -5.0, 2.0, Material.light(20.0)),
         Sphere(-1.0, 0.0, -2.5, 1.0, Material(Vector(1.0,0.6,0.1).mixWhite(),Vector(), Material.Type.SPECULAR)),
         Sphere(1.0, 0.5, -1.0, 0.5, Material(Vector(0.2,0.5,1.0).mixWhite(), Vector(), Material.Type.DIFFUSE)),
         //Plane(15.0, 0.0, 0.0, Vector(-1.0,0.0,0.0), Material(Vector(0.25,0.53,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
@@ -107,7 +107,7 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
     if(closestIntersection.material.types.contains(Material.Type.LIGHT)) {
         return closestIntersection.material.emittance
     } else {
-       // val explicitRay = explicitRay(closestIntersection)
+        val explicitRay = explicitRay(closestIntersection)
         val randomVector = Vector.random()
         val crossed = randomVector.cross(closestIntersection.normal).normalize()
         val eps1 = Random.nextDouble()*3.14159*2.0
@@ -126,24 +126,25 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
             crossed * x + tangent * y + closestIntersection.normal * z
         }
 
-        val reflected = shootRay(closestIntersection.position, newDirection)
-        return closestIntersection.material.color * reflected// + explicitRay
+        val reflected = shootRay(closestIntersection.position, newDirection.normalize())
+        return closestIntersection.material.color * (reflected ) //explicitRay
     }
 
 }
 
 fun explicitRay(surfacePoint :SurfacePoint) : Vector {
-    val lights = spheres.filter { it.material.types.contains(Material.Type.LIGHT) }
+    val lights = spheres.filter { it.material.isLight() }
     var lightValue = Vector()
     lights.forEach {
         val randomPointOnLight = it.getRandomPoint()
-        val direction = randomPointOnLight.position - surfacePoint.position
+        val direction = (randomPointOnLight.position - surfacePoint.position).normalize()
 
         val intersections = spheres.mapNotNull { s -> s.getIntersection(surfacePoint.position, direction) }
         val closestIntersection = intersections.minBy { s -> (s.position-surfacePoint.position).length()}
 
         if(closestIntersection != null && closestIntersection.material.isLight()) {
-            lightValue += (surfacePoint.material.color * surfacePoint.normal.dot(closestIntersection.normal))*-1.0
+
+            lightValue += (surfacePoint.material.color * surfacePoint.normal.dot(direction))
         }
     }
     return lightValue

@@ -12,7 +12,9 @@ import kotlin.reflect.typeOf
 val width = 500
 val height = 300
 /*
+
 importScripts("lib/kotlin.js")
+
  */
 
 val canvas = document.getElementById("c") as HTMLCanvasElement

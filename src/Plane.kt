@@ -14,4 +14,8 @@ class Plane(x : Double, y : Double, z : Double, val normal : Vector, material: M
         return SurfacePoint(position, normal, material)
     }
 
+    override fun getArea() : Double {
+        return 1.0
+    }
+
 }

@@ -1,4 +1,5 @@
 importScripts("lib/kotlin.js")
+
 if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
@@ -17,6 +18,8 @@ var raytracerkotlin = function (_, Kotlin) {
   var throwISE = Kotlin.throwISE;
   var setOf = Kotlin.kotlin.collections.setOf_mh5how$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
+  var min = Kotlin.kotlin.collections.min_l63kqw$;
+  var math = Kotlin.kotlin.math;
   Material$Type.prototype = Object.create(Enum.prototype);
   Material$Type.prototype.constructor = Material$Type;
   Plane.prototype = Object.create(Mesh.prototype);
@@ -142,6 +145,7 @@ var raytracerkotlin = function (_, Kotlin) {
       return closestIntersection.material.emittance;
     }
      else {
+      var explicitRay_0 = explicitRay(closestIntersection);
       var randomVector = Vector$Companion_getInstance().random();
       var crossed = randomVector.cross_spvnod$(closestIntersection.normal).normalize();
       var eps1 = Random.Default.nextDouble() * 3.14159 * 2.0;
@@ -151,7 +155,7 @@ var raytracerkotlin = function (_, Kotlin) {
       var y = Math_0.sin(eps1) * eps2;
       var x_1 = 1.0 - eps2 * eps2;
       var z = Math_0.sqrt(x_1);
-      var tangent = closestIntersection.normal.cross_spvnod$(crossed);
+      var tangent = closestIntersection.normal.cross_spvnod$(crossed).normalize();
       if (closestIntersection.material.types.contains_11rb$(Material$Type$SPECULAR_getInstance()) && Random.Default.nextDouble() > 0.4) {
         tmp$_1 = direction.minus_spvnod$(closestIntersection.normal.times_14dthe$(2.0).times_14dthe$(closestIntersection.normal.dot_spvnod$(direction)));
       }
@@ -159,7 +163,7 @@ var raytracerkotlin = function (_, Kotlin) {
         tmp$_1 = crossed.times_14dthe$(x_0).plus_spvnod$(tangent.times_14dthe$(y)).plus_spvnod$(closestIntersection.normal.times_14dthe$(z));
       }
       var newDirection = tmp$_1;
-      var reflected = shootRay(closestIntersection.position, newDirection);
+      var reflected = shootRay(closestIntersection.position, newDirection.normalize());
       return closestIntersection.material.color.times_spvnod$(reflected);
     }
   }
@@ -170,7 +174,7 @@ var raytracerkotlin = function (_, Kotlin) {
     tmp$ = $receiver.iterator();
     while (tmp$.hasNext()) {
       var element = tmp$.next();
-      if (element.material.types.contains_11rb$(Material$Type$LIGHT_getInstance()))
+      if (element.material.isLight())
         destination.add_11rb$(element);
     }
     var lights = destination;
@@ -180,7 +184,7 @@ var raytracerkotlin = function (_, Kotlin) {
     loop_label: while (tmp$_0.hasNext()) {
       var element_0 = tmp$_0.next();
       var randomPointOnLight = element_0.getRandomPoint();
-      var direction = randomPointOnLight.position.minus_spvnod$(surfacePoint.position);
+      var direction = randomPointOnLight.position.minus_spvnod$(surfacePoint.position).normalize();
       var $receiver_0 = spheres;
       var destination_0 = ArrayList_init_0();
       var tmp$_1;
@@ -220,7 +224,7 @@ var raytracerkotlin = function (_, Kotlin) {
        while (false);
       var closestIntersection = minBy$result;
       if (closestIntersection != null && closestIntersection.material.isLight()) {
-        lightValue.v = lightValue.v.plus_spvnod$(surfacePoint.material.color.times_14dthe$(surfacePoint.normal.dot_spvnod$(closestIntersection.normal)).times_14dthe$(-1.0));
+        lightValue.v = lightValue.v.plus_spvnod$(surfacePoint.material.color.times_14dthe$(surfacePoint.normal.dot_spvnod$(direction)));
       }
     }
     return lightValue.v;
@@ -338,6 +342,9 @@ var raytracerkotlin = function (_, Kotlin) {
   Plane.prototype.getRandomPoint = function () {
     return new SurfacePoint(this.position, this.normal, this.material);
   };
+  Plane.prototype.getArea = function () {
+    return 1.0;
+  };
   Plane.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Plane',
@@ -348,16 +355,25 @@ var raytracerkotlin = function (_, Kotlin) {
     this.radius = radius;
   }
   Sphere.prototype.getIntersection_nmolro$ = function (start, direction) {
+    var tmp$;
     var center = this.position;
     var v = start.minus_spvnod$(center);
     var wee = v.dot_spvnod$(direction) * v.dot_spvnod$(direction) - (v.x * v.x + v.y * v.y + v.z * v.z - this.radius * this.radius);
     if (wee > 0) {
       var intersectionDistance = [v.dot_spvnod$(direction) * -1 + Math_0.sqrt(wee), v.dot_spvnod$(direction) * -1 - Math_0.sqrt(wee)];
-      var a = intersectionDistance[0];
-      var b = intersectionDistance[1];
-      var closestIntersection = Math_0.min(a, b);
-      if (closestIntersection < 1.0E-5)
+      var destination = ArrayList_init_0();
+      var tmp$_0;
+      for (tmp$_0 = 0; tmp$_0 !== intersectionDistance.length; ++tmp$_0) {
+        var element = intersectionDistance[tmp$_0];
+        if (element > 1.0E-5)
+          destination.add_11rb$(element);
+      }
+      var intersectionsInDirection = destination;
+      tmp$ = min(intersectionsInDirection);
+      if (tmp$ == null) {
         return null;
+      }
+      var closestIntersection = tmp$;
       var endDistance = direction.times_14dthe$(closestIntersection);
       var endPosition = start.plus_spvnod$(endDistance);
       return new SurfacePoint(endPosition, this.getNormal_spvnod$(endPosition), this.material);
@@ -368,8 +384,11 @@ var raytracerkotlin = function (_, Kotlin) {
     return pos.minus_spvnod$(this.position).normalize();
   };
   Sphere.prototype.getRandomPoint = function () {
-    var randomPoint = Vector$Companion_getInstance().random().normalize().times_14dthe$(this.radius);
+    var randomPoint = Vector$Companion_getInstance().random().normalize().times_14dthe$(this.radius).plus_spvnod$(this.position);
     return new SurfacePoint(randomPoint, this.getNormal_spvnod$(randomPoint), this.material);
+  };
+  Sphere.prototype.getArea = function () {
+    return 4 * math.PI * this.radius * this.radius;
   };
   Sphere.$metadata$ = {
     kind: Kind_CLASS,
@@ -548,7 +567,7 @@ var raytracerkotlin = function (_, Kotlin) {
   _.Vector = Vector;
   width = 500;
   height = 300;
-  spheres = listOf([new Sphere(7.5, -5.0, -2.0, 2.0, Material$Companion_getInstance().light_14dthe$(20.0)), new Sphere(-1.0, 0.0, -2.5, 1.0, Material_init((new Vector(1.0, 0.6, 0.1)).mixWhite(), Vector_init(), Material$Type$SPECULAR_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, Material_init((new Vector(0.2, 0.5, 1.0)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), Material_init((new Vector(0.2, 0.3, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
+  spheres = listOf([new Sphere(3.5, -5.0, -5.0, 2.0, Material$Companion_getInstance().light_14dthe$(20.0)), new Sphere(-1.0, 0.0, -2.5, 1.0, Material_init((new Vector(1.0, 0.6, 0.1)).mixWhite(), Vector_init(), Material$Type$SPECULAR_getInstance())), new Sphere(1.0, 0.5, -1.0, 0.5, Material_init((new Vector(0.2, 0.5, 1.0)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), Material_init((new Vector(0.2, 0.3, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance()))]);
   xmax = 5;
   ymax = 5;
   maxBounces = 10;

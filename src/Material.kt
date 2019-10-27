@@ -2,7 +2,7 @@
      constructor(color: Vector, emittance: Vector, type: Type) : this(color, emittance, setOf(type))
 
      enum class Type {
-        DIFFUSE, LIGHT, SPECULAR
+        DIFFUSE, LIGHT, SPECULAR, GLASS
      }
 
      companion object {

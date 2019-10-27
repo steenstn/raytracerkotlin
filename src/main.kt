@@ -22,9 +22,9 @@ fun clamp(value : Double, min : Double, max : Double) : Double {
 external val self: DedicatedWorkerGlobalScope
 
 val spheres = listOf(
-    //Sphere(3.5, -5.0, -5.0, 2.0, Material.light(20.0)),
+    Sphere(-3.5, -5.0, 2.0, 2.0, Material.light(5.0)),
     Sphere(-2.0, -1.0, -3.0, 2.0, Material(Vector(1.0,0.6,0.1).mixWhite(),Vector(), Material.Type.SPECULAR)),
-    Sphere(1.0, 0.5, 0.0, 0.5, Material(Vector(0.2,0.5,1.0).mixWhite(), Vector(), Material.Type.DIFFUSE)),
+    Sphere(1.0, 0.0, 0.8, 1.0, Material(Vector(0.2,0.5,1.0).mixWhite(), Vector(), setOf(Material.Type.GLASS, Material.Type.SPECULAR))),
     Sphere(3.0, -2.0, -3.0, 3.0, Material(Vector(0.8,0.2,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
     Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
     Plane(0.0, -1000.0, 0.0, Vector(0.0,1.0,0.0), Material.light(0.9,0.9,1.0))
@@ -104,6 +104,8 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
 
     if(closestIntersection.material.types.contains(Material.Type.LIGHT)) {
         return closestIntersection.material.emittance
+    }  else if(closestIntersection.material.types.contains(Material.Type.GLASS) && Random.nextDouble() > 0.1) {
+        return shootRefractedRay(closestIntersection.position, direction, closestIntersection, 1.0)
     } else {
         val explicitRay = explicitRay(closestIntersection)
         val randomVector = Vector.random()
@@ -146,4 +148,34 @@ fun explicitRay(surfacePoint :SurfacePoint) : Vector {
         }
     }
     return lightValue
+}
+
+fun shootRefractedRay(start: Vector, direction: Vector, surfacePoint: SurfacePoint, refractionIndex : Double) : Vector {
+    val refractionIndex2 = 1.5
+
+    val n = refractionIndex / refractionIndex2
+    val cosI = surfacePoint.normal.dot(direction)
+    val sinT2 = n * n * (1.0 - cosI*cosI)
+
+    val refracted = direction*n + surfacePoint.normal*(n*cosI- sqrt(1.0-sinT2))
+
+    val newDirection = refracted.normalize()
+    val newStart = start + direction*0.0001
+
+    val intersections = spheres.mapNotNull { s -> s.getIntersection(newStart, newDirection) }
+    val closestIntersection = intersections.minBy { s -> (s.position-newStart).length()}?: return Vector()
+    val normalOut = closestIntersection.normal*-1.0
+
+    val cosOut = normalOut.dot(direction)
+    val sinT2Out = n*n * (1.0-cosOut*cosOut)
+    val refractedOut = direction * n + normalOut*(n*cosOut-sqrt(1.0-sinT2Out))
+    val directionOut = refractedOut.normalize()
+    if(sinT2Out > 1) {
+        return Vector()
+    } else {
+        return shootRay(surfacePoint.position, directionOut)
+    }
+
+
+
 }

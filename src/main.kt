@@ -166,7 +166,7 @@ fun shootRefractedRay(start: Vector, direction: Vector, surfacePoint: SurfacePoi
     if(sinT2Out > 1) {
         return Vector()
     } else {
-        return shootRay(closestIntersection.position, directionOut)
+        return shootRay(closestIntersection.position+directionOut*0.0001, directionOut)
     }
 
 

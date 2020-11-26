@@ -1,5 +1,5 @@
 importScripts("lib/kotlin.js")
-if (typeof kotlin === 'undefined') {
+f (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
 var raytracerkotlin = function (_, Kotlin) {
@@ -304,7 +304,7 @@ var raytracerkotlin = function (_, Kotlin) {
       return Vector_init();
     }
      else {
-      return shootRay(closestIntersection.position, directionOut);
+      return shootRay(closestIntersection.position.plus_spvnod$(directionOut.times_14dthe$(1.0E-4)), directionOut);
     }
   }
   function Material(color, emittance, types) {

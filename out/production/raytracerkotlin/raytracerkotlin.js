@@ -1,5 +1,5 @@
 importScripts("lib/kotlin.js")
-f (typeof kotlin === 'undefined') {
+if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
 var raytracerkotlin = function (_, Kotlin) {

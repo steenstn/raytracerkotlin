@@ -6,6 +6,10 @@
       <change beforePath="$PROJECT_DIR$/out/production/raytracerkotlin/raytracerkotlin.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/raytracerkotlin/raytracerkotlin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/raytracerkotlin/raytracerkotlin.meta.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/raytracerkotlin/raytracerkotlin.meta.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/raytracerkotlin/raytracerkotlin/root-package.kjsm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/raytracerkotlin/raytracerkotlin/root-package.kjsm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/render/render.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/render/render.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/render/render.meta.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/render/render.meta.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/render/render/root-package.kjsm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/render/render/root-package.kjsm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/src/render.kt" beforeDir="false" afterPath="$PROJECT_DIR$/render/src/render.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Material.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Material.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.kt" afterDir="false" />
     </list>
@@ -19,9 +23,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Enum" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -37,7 +41,7 @@
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="raytracerkotlin" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../coroutines" />
+    <property name="last_opened_file_path" value="C:/repos/gauss" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">

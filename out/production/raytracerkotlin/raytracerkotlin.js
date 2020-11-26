@@ -1,12 +1,9 @@
 importScripts("lib/kotlin.js")
-
 if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'raytracerkotlin'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'raytracerkotlin'.");
 }
 var raytracerkotlin = function (_, Kotlin) {
   'use strict';
-  var setOf = Kotlin.kotlin.collections.setOf_i5x0yv$;
-  var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Unit = Kotlin.kotlin.Unit;
   var Random = Kotlin.kotlin.random.Random;
@@ -17,8 +14,11 @@ var raytracerkotlin = function (_, Kotlin) {
   var Enum = Kotlin.kotlin.Enum;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwISE = Kotlin.throwISE;
-  var setOf_0 = Kotlin.kotlin.collections.setOf_mh5how$;
+  var setOf = Kotlin.kotlin.collections.setOf_mh5how$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
+  var setOf_0 = Kotlin.kotlin.collections.setOf_i5x0yv$;
+  var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
+  var mutableListOf = Kotlin.kotlin.collections.mutableListOf_i5x0yv$;
   var min = Kotlin.kotlin.collections.min_l63kqw$;
   var math = Kotlin.kotlin.math;
   Material$Type.prototype = Object.create(Enum.prototype);
@@ -32,7 +32,7 @@ var raytracerkotlin = function (_, Kotlin) {
   function clamp(value, min, max) {
     return value > max ? max : value < min ? min : value;
   }
-  var spheres;
+  var scene;
   var xmax;
   var ymax;
   var maxBounces;
@@ -41,6 +41,7 @@ var raytracerkotlin = function (_, Kotlin) {
   var numPasses;
   var DoF;
   var focusLength;
+  var numRays;
   function main$lambda(it) {
     println('worker got message!');
     raytrace();
@@ -56,7 +57,7 @@ var raytracerkotlin = function (_, Kotlin) {
     self.addEventListener('message', main$lambda);
   }
   function raytrace() {
-    var tmp$, tmp$_0;
+    var tmp$, tmp$_0, tmp$_1;
     var index = 0;
     tmp$ = height;
     for (var screenY = 0; screenY < tmp$; screenY++) {
@@ -65,10 +66,10 @@ var raytracerkotlin = function (_, Kotlin) {
         var endColor = Vector_init();
         var x = screenX * 6.0 / width - 3.0;
         var y = screenY * 6.0 * height / width / height - 3.0 * height / width;
-        var dir = (new Vector(x / xmax, (y - 0) / ymax, -1.0)).normalize();
-        var s = new Vector(0.0, -0.5, 7.0);
-        var numRays = 10;
-        for (var i = 0; i < numRays; i++) {
+        var dir = (new Vector((x + scene.cameraDirection.x) / xmax, (y + scene.cameraDirection.y) / ymax, scene.cameraDirection.z)).normalize();
+        var s = scene.cameraPosition;
+        tmp$_1 = numRays;
+        for (var i = 0; i < tmp$_1; i++) {
           numBounces = 0;
           var s2 = s.plus_spvnod$(Vector$Companion_getInstance().random().times_14dthe$(DoF));
           var position2 = s.plus_spvnod$(dir.times_14dthe$(focusLength));
@@ -87,10 +88,10 @@ var raytracerkotlin = function (_, Kotlin) {
     }
     var $receiver = endImage;
     var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
-    var tmp$_1;
-    tmp$_1 = $receiver.iterator();
-    while (tmp$_1.hasNext()) {
-      var item = tmp$_1.next();
+    var tmp$_2;
+    tmp$_2 = $receiver.iterator();
+    while (tmp$_2.hasNext()) {
+      var item = tmp$_2.next();
       destination.add_11rb$(clamp(item / numPasses, 0.0, 1.0));
     }
     var imageToRender = destination;
@@ -103,7 +104,7 @@ var raytracerkotlin = function (_, Kotlin) {
     if ((tmp$ = numBounces, numBounces = tmp$ + 1 | 0, tmp$) > maxBounces) {
       return Vector_init();
     }
-    var $receiver = spheres;
+    var $receiver = scene.meshes;
     var destination = ArrayList_init_0();
     var tmp$_2;
     tmp$_2 = $receiver.iterator();
@@ -142,7 +143,7 @@ var raytracerkotlin = function (_, Kotlin) {
      while (false);
     tmp$_0 = minBy$result;
     if (tmp$_0 == null) {
-      return Vector_init();
+      return scene.ambientColor;
     }
     var closestIntersection = tmp$_0;
     if (closestIntersection.material.types.contains_11rb$(Material$Type$LIGHT_getInstance())) {
@@ -175,7 +176,7 @@ var raytracerkotlin = function (_, Kotlin) {
     }
   }
   function explicitRay(surfacePoint) {
-    var $receiver = spheres;
+    var $receiver = scene.meshes;
     var destination = ArrayList_init_0();
     var tmp$;
     tmp$ = $receiver.iterator();
@@ -192,7 +193,7 @@ var raytracerkotlin = function (_, Kotlin) {
       var element_0 = tmp$_0.next();
       var randomPointOnLight = element_0.getRandomPoint();
       var direction = randomPointOnLight.position.minus_spvnod$(surfacePoint.position).normalize();
-      var $receiver_0 = spheres;
+      var $receiver_0 = scene.meshes;
       var destination_0 = ArrayList_init_0();
       var tmp$_1;
       tmp$_1 = $receiver_0.iterator();
@@ -249,7 +250,7 @@ var raytracerkotlin = function (_, Kotlin) {
     var refracted = tmp$_0.plus_spvnod$(tmp$_1.times_14dthe$(tmp$_2 - Math_0.sqrt(x)));
     var newDirection = refracted.normalize();
     var newStart = start.plus_spvnod$(direction.times_14dthe$(1.0E-4));
-    var $receiver = spheres;
+    var $receiver = scene.meshes;
     var destination = ArrayList_init_0();
     var tmp$_3;
     tmp$_3 = $receiver.iterator();
@@ -303,7 +304,7 @@ var raytracerkotlin = function (_, Kotlin) {
       return Vector_init();
     }
      else {
-      return shootRay(surfacePoint.position, directionOut);
+      return shootRay(closestIntersection.position, directionOut);
     }
   }
   function Material(color, emittance, types) {
@@ -372,10 +373,13 @@ var raytracerkotlin = function (_, Kotlin) {
     Material$Companion_instance = this;
   }
   Material$Companion.prototype.light_yvo9jy$ = function (r, g, b) {
-    return new Material(new Vector(1.0, 1.0, 1.0), new Vector(r, g, b), setOf_0(Material$Type$LIGHT_getInstance()));
+    return new Material(new Vector(1.0, 1.0, 1.0), new Vector(r, g, b), setOf(Material$Type$LIGHT_getInstance()));
   };
   Material$Companion.prototype.light_14dthe$ = function (rgb) {
     return this.light_yvo9jy$(rgb, rgb, rgb);
+  };
+  Material$Companion.prototype.diffuse_yvo9jy$ = function (r, g, b) {
+    return Material_init((new Vector(r, g, b)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance());
   };
   Material$Companion.$metadata$ = {
     kind: Kind_OBJECT,
@@ -399,7 +403,7 @@ var raytracerkotlin = function (_, Kotlin) {
   };
   function Material_init(color, emittance, type, $this) {
     $this = $this || Object.create(Material.prototype);
-    Material.call($this, color, emittance, setOf_0(type));
+    Material.call($this, color, emittance, setOf(type));
     return $this;
   }
   function Mesh(x, y, z, material) {
@@ -434,6 +438,59 @@ var raytracerkotlin = function (_, Kotlin) {
     kind: Kind_CLASS,
     simpleName: 'Plane',
     interfaces: [Mesh]
+  };
+  function Scene(meshes, cameraPosition, cameraDirection, ambientColor) {
+    this.meshes = meshes;
+    this.cameraPosition = cameraPosition;
+    this.cameraDirection = cameraDirection;
+    this.ambientColor = ambientColor;
+  }
+  Scene.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Scene',
+    interfaces: []
+  };
+  function SceneCreator() {
+    SceneCreator$Companion_getInstance();
+  }
+  function SceneCreator$Companion() {
+    SceneCreator$Companion_instance = this;
+  }
+  SceneCreator$Companion.prototype.standardScene = function () {
+    var cameraPostion = new Vector(0.0, -2.0, 8.0);
+    var cameraDirection = new Vector(0.0, 0.5, -1.0);
+    var meshes = listOf([new Sphere(-4.5, -5.0, 3.0, 2.0, Material$Companion_getInstance().light_14dthe$(5.0)), new Sphere(-2.0, -1.0, -3.0, 2.0, Material_init((new Vector(1.0, 0.6, 0.1)).mixWhite(), Vector_init(), Material$Type$SPECULAR_getInstance())), new Sphere(1.0, 0.0, 0.8, 1.0, new Material((new Vector(0.2, 0.5, 1.0)).mixWhite(), Vector_init(), setOf_0([Material$Type$GLASS_getInstance(), Material$Type$SPECULAR_getInstance()]))), new Sphere(3.0, -2.0, -3.0, 3.0, Material_init((new Vector(0.8, 0.2, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), Material_init((new Vector(0.2, 0.3, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, -1000.0, 0.0, new Vector(0.0, 1.0, 0.0), Material$Companion_getInstance().light_yvo9jy$(0.9, 0.9, 1.0))]);
+    return new Scene(meshes, cameraPostion, cameraDirection, Vector_init());
+  };
+  SceneCreator$Companion.prototype.molecule = function () {
+    var cameraPostion = new Vector(0.0, -0.5, 30.0);
+    var cameraDirection = new Vector(0.0, 0.0, -1.0);
+    var spheres = mutableListOf([new Sphere(0.0, 0.0, 0.0, 1.0, Material$Companion_getInstance().diffuse_yvo9jy$(0.2, 0.3, 1.0))]);
+    var position = Vector_init();
+    for (var i = 0; i <= 200; i++) {
+      var newDir = Vector$Companion_getInstance().random().normalize().times_14dthe$(1.1);
+      position = position.plus_spvnod$(newDir);
+      var color = Random.Default.nextDouble() > 0.7 ? new Vector(1.0, 0.2, 0.33) : new Vector(0.65, 1.2, 0.64);
+      spheres.add_11rb$(new Sphere(position.x, position.y, position.z, 1.0, Material$Companion_getInstance().diffuse_yvo9jy$(color.x, color.y, color.z)));
+    }
+    return new Scene(spheres, cameraPostion, cameraDirection, new Vector(1.0, 1.0, 1.0));
+  };
+  SceneCreator$Companion.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'Companion',
+    interfaces: []
+  };
+  var SceneCreator$Companion_instance = null;
+  function SceneCreator$Companion_getInstance() {
+    if (SceneCreator$Companion_instance === null) {
+      new SceneCreator$Companion();
+    }
+    return SceneCreator$Companion_instance;
+  }
+  SceneCreator.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'SceneCreator',
+    interfaces: []
   };
   function Sphere(x, y, z, radius, material) {
     Mesh.call(this, x, y, z, material);
@@ -568,9 +625,9 @@ var raytracerkotlin = function (_, Kotlin) {
     }
   });
   _.clamp_yvo9jy$ = clamp;
-  Object.defineProperty(_, 'spheres', {
+  Object.defineProperty(_, 'scene', {
     get: function () {
-      return spheres;
+      return scene;
     }
   });
   Object.defineProperty(_, 'xmax', {
@@ -622,6 +679,11 @@ var raytracerkotlin = function (_, Kotlin) {
       return focusLength;
     }
   });
+  Object.defineProperty(_, 'numRays', {
+    get: function () {
+      return numRays;
+    }
+  });
   _.main = main;
   _.raytrace = raytrace;
   _.shootRay_nmolro$ = shootRay;
@@ -647,6 +709,11 @@ var raytracerkotlin = function (_, Kotlin) {
   _.Material = Material;
   _.Mesh = Mesh;
   _.Plane = Plane;
+  _.Scene = Scene;
+  Object.defineProperty(SceneCreator, 'Companion', {
+    get: SceneCreator$Companion_getInstance
+  });
+  _.SceneCreator = SceneCreator;
   _.Sphere = Sphere;
   _.SurfacePoint = SurfacePoint;
   Object.defineProperty(Vector, 'Companion', {
@@ -654,9 +721,9 @@ var raytracerkotlin = function (_, Kotlin) {
   });
   _.Vector_init = Vector_init;
   _.Vector = Vector;
-  width = 500;
-  height = 300;
-  spheres = listOf([new Sphere(-3.5, -5.0, 2.0, 2.0, Material$Companion_getInstance().light_14dthe$(5.0)), new Sphere(-2.0, -1.0, -3.0, 2.0, Material_init((new Vector(1.0, 0.6, 0.1)).mixWhite(), Vector_init(), Material$Type$SPECULAR_getInstance())), new Sphere(1.0, 0.0, 0.8, 1.0, new Material((new Vector(0.2, 0.5, 1.0)).mixWhite(), Vector_init(), setOf([Material$Type$GLASS_getInstance(), Material$Type$SPECULAR_getInstance()]))), new Sphere(3.0, -2.0, -3.0, 3.0, Material_init((new Vector(0.8, 0.2, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, 1.0, 0.0, new Vector(0.0, -1.0, 0.0), Material_init((new Vector(0.2, 0.3, 0.2)).mixWhite(), Vector_init(), Material$Type$DIFFUSE_getInstance())), new Plane(0.0, -1000.0, 0.0, new Vector(0.0, 1.0, 0.0), Material$Companion_getInstance().light_yvo9jy$(0.9, 0.9, 1.0))]);
+  width = 800;
+  height = 500;
+  scene = SceneCreator$Companion_getInstance().standardScene();
   xmax = 5;
   ymax = 5;
   maxBounces = 10;
@@ -665,6 +732,7 @@ var raytracerkotlin = function (_, Kotlin) {
   numPasses = 1;
   DoF = 0.1;
   focusLength = 7.0;
+  numRays = 1;
   main();
   Kotlin.defineModule('raytracerkotlin', _);
   return _;

@@ -5,8 +5,8 @@ import kotlin.browser.window
 import kotlin.math.*
 import kotlin.random.Random
 
-val width = 500
-val height = 300
+val width = 800
+val height = 500
 
 /*
 Vänsterorienterat
@@ -21,14 +21,7 @@ fun clamp(value : Double, min : Double, max : Double) : Double {
 }
 external val self: DedicatedWorkerGlobalScope
 
-val spheres = listOf(
-    Sphere(-3.5, -5.0, 2.0, 2.0, Material.light(5.0)),
-    Sphere(-2.0, -1.0, -3.0, 2.0, Material(Vector(1.0,0.6,0.1).mixWhite(),Vector(), Material.Type.SPECULAR)),
-    Sphere(1.0, 0.0, 0.8, 1.0, Material(Vector(0.2,0.5,1.0).mixWhite(), Vector(), setOf(Material.Type.GLASS, Material.Type.SPECULAR))),
-    Sphere(3.0, -2.0, -3.0, 3.0, Material(Vector(0.8,0.2,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
-    Plane(0.0, 1.0, 0.0, Vector(0.0,-1.0,0.0), Material(Vector(0.2,0.3,0.2).mixWhite(), Vector(), Material.Type.DIFFUSE)),
-    Plane(0.0, -1000.0, 0.0, Vector(0.0,1.0,0.0), Material.light(0.9,0.9,1.0))
-)
+val scene = SceneCreator.standardScene()
 
 val xmax = 5
 val ymax = 5
@@ -38,6 +31,7 @@ var endImage = arrayListOf<Double>()
 var numPasses = 1
 val DoF = 0.1
 val focusLength = 7.0
+val numRays = 1
 
  fun main() {
     println("Started webworker")
@@ -59,11 +53,10 @@ fun raytrace() {
             var endColor = Vector()
             val x = (screenX * 6.0) / width - 3.0
             val y = (screenY * 6.0) * height / width / height - 3.0 * height / width
-            val dir = Vector(x / xmax, (y-0) / ymax, -1.0).normalize()
+            val dir = Vector((x+scene.cameraDirection.x) / xmax, (y+scene.cameraDirection.y) / ymax, scene.cameraDirection.z).normalize()
 
-            val s = Vector(0.0, -0.5, 7.0)
+            val s = scene.cameraPosition
 
-            val numRays = 10
             for (i in 0 until numRays) {
                 numBounces = 0
                 val s2 = s + Vector.random()*DoF
@@ -99,8 +92,8 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
     if(numBounces++ > maxBounces) {
         return Vector()
     }
-    val intersections = spheres.mapNotNull { it.getIntersection(start, direction) }
-    val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return Vector()
+    val intersections = scene.meshes.mapNotNull { it.getIntersection(start, direction) }
+    val closestIntersection = intersections.minBy { (it.position-start).length() } ?: return scene.ambientColor
 
     if(closestIntersection.material.types.contains(Material.Type.LIGHT)) {
         return closestIntersection.material.emittance
@@ -133,13 +126,13 @@ fun shootRay(start : Vector, direction : Vector) : Vector {
 }
 
 fun explicitRay(surfacePoint :SurfacePoint) : Vector {
-    val lights = spheres.filter { it.material.isLight() }
+    val lights = scene.meshes.filter { it.material.isLight() }
     var lightValue = Vector()
     lights.forEach {
         val randomPointOnLight = it.getRandomPoint()
         val direction = (randomPointOnLight.position - surfacePoint.position).normalize()
 
-        val intersections = spheres.mapNotNull { s -> s.getIntersection(surfacePoint.position, direction) }
+        val intersections = scene.meshes.mapNotNull { s -> s.getIntersection(surfacePoint.position, direction) }
         val closestIntersection = intersections.minBy { s -> (s.position-surfacePoint.position).length()}
 
         if(closestIntersection != null && closestIntersection.material.isLight()) {
@@ -162,7 +155,7 @@ fun shootRefractedRay(start: Vector, direction: Vector, surfacePoint: SurfacePoi
     val newDirection = refracted.normalize()
     val newStart = start + direction*0.0001
 
-    val intersections = spheres.mapNotNull { s -> s.getIntersection(newStart, newDirection) }
+    val intersections = scene.meshes.mapNotNull { s -> s.getIntersection(newStart, newDirection) }
     val closestIntersection = intersections.minBy { s -> (s.position-newStart).length()}?: return Vector()
     val normalOut = closestIntersection.normal*-1.0
 
@@ -173,7 +166,7 @@ fun shootRefractedRay(start: Vector, direction: Vector, surfacePoint: SurfacePoi
     if(sinT2Out > 1) {
         return Vector()
     } else {
-        return shootRay(surfacePoint.position, directionOut)
+        return shootRay(closestIntersection.position, directionOut)
     }
 
 

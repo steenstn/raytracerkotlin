@@ -13,6 +13,10 @@
          fun light(rgb : Double) : Material {
              return light(rgb, rgb, rgb)
          }
+
+         fun diffuse(r: Double, g: Double, b: Double) : Material {
+             return Material(Vector(r,g,b).mixWhite(), Vector(), Type.DIFFUSE)
+         }
      }
 
 
